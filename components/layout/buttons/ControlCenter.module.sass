@@ -1,0 +1,35 @@
+.toggle
+  width: 14px
+  height: 6px
+  border: 1px solid
+  @apply border-black/70 dark:border-white
+  border-radius: 4px
+  position: relative
+
+.toggleOff
+  @extend .toggle
+
+  &:after
+    content: ""
+    width: 3px
+    height: 3px
+    @apply bg-black/70 dark:bg-white
+    position: absolute
+    left: 0.5px
+    top: 0.5px
+    border-radius: 4px
+
+.toggleOn
+  @extend .toggle
+  @apply bg-black/70 dark:bg-white
+  margin-top: 1px
+
+  &:after
+    content: ""
+    width: 3px
+    height: 3px
+    position: absolute
+    right: 0.5px
+    top: 0.5px
+    border-radius: 4px
+    @apply bg-white/90 dark:bg-black/80
