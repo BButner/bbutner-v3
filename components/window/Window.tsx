@@ -40,15 +40,12 @@ const WindowComponent: React.FC<ChildrenProps & AdditionalClassNames & DragContr
 
     useEffect(() => {
       if (store.desktop && windowRef.current) {
-        // console.log('fired')
-        // const desktop = (store.desktop.current as Element);
-        // const window = (windowRef.current as Element);
-        // setTop((desktop.clientHeight / 2) - (window.clientHeight / 2));
-        // setLeft((desktop.clientWidth / 2) - (window.clientWidth / 2));
-        //
-        // console.log(top, left)
+        const desktop = (store.desktop.current as Element);
+        const window = (windowRef.current as Element);
+        setTop((desktop.clientHeight / 2) - (window.clientHeight / 2));
+        setLeft((desktop.clientWidth / 2) - (window.clientWidth / 2));
       }
-    });
+    }, [store.desktop]);
 
     if (!store.desktop) return <></>
 
@@ -67,10 +64,11 @@ const WindowComponent: React.FC<ChildrenProps & AdditionalClassNames & DragContr
         onDragEnd={() => {
           document.documentElement.classList.remove('noSelect');
         }}
+        style={{top, left}}
         className={clsx(
           'rounded-lg',
           'text-zinc-900 dark:text-white transition-colors duration-200',
-          'absolute top-0 left-0 shadow-lg',
+          'absolute shadow-lg',
           className
         )}>
         <div className="relative">

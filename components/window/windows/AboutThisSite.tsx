@@ -8,10 +8,10 @@ export const AboutThisSite: React.FC = () => {
 
   return (
     <Window dragControls={controls}>
-      <Window.DragAreaContent dragControls={controls} className="bg-white rounded-t-lg pl-4">
+      <Window.DragAreaContent dragControls={controls} className="bg-white dark:bg-dark-title rounded-t-lg pl-4">
         <WindowButtons/>
       </Window.DragAreaContent>
-      <Window.Content className="pt-24 bg-zinc-100 rounded-lg flex items-center justify-center space-x-12 p-12">
+      <Window.Content className="pt-24 bg-zinc-100 dark:bg-dark-content rounded-lg flex items-center justify-center space-x-12 p-12">
         <div
           className="p-1.5 bg-gradient-to-b from-white to-gray-300 rounded-full flex items-center justify-center drop-shadow">
           <Image

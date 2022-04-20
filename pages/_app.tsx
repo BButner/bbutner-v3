@@ -5,6 +5,9 @@ import React, {useEffect} from "react";
 import {initState, loadStateFromLocal, useStore} from "../lib/state/state";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const updateDarkModeState = (darkMode: boolean) => {
+    useStore.setState({darkMode});
+  }
 
   useEffect(() => {
     loadStateFromLocal();
@@ -18,12 +21,11 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
 
     var mql = window.matchMedia('(prefers-color-scheme: dark)')
+
+    updateDarkModeState(mql.matches);
+
     mql.onchange = (e) => {
-      if (e.matches) {
-        useStore.setState({ darkMode: true });
-      } else {
-        useStore.setState({ darkMode: false });
-      }
+      updateDarkModeState(e.matches);
     }
   }, []);
 
