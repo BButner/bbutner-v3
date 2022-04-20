@@ -10,7 +10,7 @@ export const Layout: React.FC<ChildrenProps> = ({children}) => {
   return (
     <div className="w-screen h-screen relative">
       <Wallpaper/>
-      <div className="w-screen h-screen relative">
+      <div className="w-screen h-screen relative flex flex-col">
         <div className={clsx(
           styles.topBar,
           "bg-white/40 dark:bg-gray-900/50"
@@ -18,7 +18,7 @@ export const Layout: React.FC<ChildrenProps> = ({children}) => {
           <AppleLogo/>
           <BarIcons/>
         </div>
-        <div className="w-full h-full">
+        <div className="w-full h-full flex flex-col">
           {children}
         </div>
       </div>
