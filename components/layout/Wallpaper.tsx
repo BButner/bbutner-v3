@@ -8,8 +8,8 @@ export const Wallpaper: React.FC = () => {
 
   useEffect(() => {
     const unsub = useStore
-      .subscribe(state => state.darkMode, (mode, _) => {
-        setShow(mode);
+      .subscribe((state, _) => {
+        setShow(state.darkMode);
       });
 
     return () => {
