@@ -31,11 +31,12 @@ export const Content: React.FC<ChildrenProps & AdditionalClassNames> = ({childre
   return <div className={className}>{children}</div>
 }
 
-const WindowComponent: React.FC<ChildrenProps & AdditionalClassNames & DragControlProps> =
+const WindowComponent: React.FC<ChildrenProps & AdditionalClassNames & DragControlProps & WindowProps> =
   ({
      children,
      className,
      dragControls,
+     windowId
    }) => {
     const store = useStore();
     const windowRef = useRef(null);
@@ -43,18 +44,21 @@ const WindowComponent: React.FC<ChildrenProps & AdditionalClassNames & DragContr
     const [left, setLeft] = useState(0);
 
     useEffect(() => {
-      if (store.desktop && windowRef.current) {
+      if (store.desktop && windowRef.current && top === 0 && left === 0) {
         const desktop = (store.desktop.current as Element);
         const window = (windowRef.current as Element);
         setTop((desktop.clientHeight / 2) - (window.clientHeight / 2));
         setLeft((desktop.clientWidth / 2) - (window.clientWidth / 2));
       }
-    }, [store.desktop]);
+    }, [store.desktop, store.activeWindowId]);
 
     if (!store.desktop) return <></>
 
     return (
       <motion.div
+        onPointerDown={() => {
+          useStore.setState({ activeWindowId: windowId });
+        }}
         ref={windowRef}
         drag
         dragElastic={0}
@@ -71,8 +75,10 @@ const WindowComponent: React.FC<ChildrenProps & AdditionalClassNames & DragContr
         style={{top, left}}
         className={clsx(
           'rounded-lg',
-          'text-zinc-900 dark:text-white transition-colors duration-200',
+          'text-zinc-900 dark:text-white transition-colors transition-opacity duration-200',
           'absolute shadow-lg',
+          top == 0 && left == 0 ? 'opacity-0' : 'opacity-1',
+          store.activeWindowId === windowId ? 'z-40' : '',
           className
         )}>
         <div className="relative">

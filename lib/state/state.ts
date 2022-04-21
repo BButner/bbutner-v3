@@ -18,6 +18,7 @@ interface IStore {
   openWindows: OpenWindow[];
   openWindow: (window: OpenWindow) => void;
   closeWindow: (windowId: string) => void;
+  activeWindowId: string;
 }
 
 export const useStore = create<IStore>(set => ({
@@ -30,9 +31,11 @@ export const useStore = create<IStore>(set => ({
     if (state.openWindows.filter(window => window.windowId === newWindow.windowId).length === 0) {
       newWindowArray.push(newWindow);
     }
-    return ({openWindows: [...state.openWindows, ...newWindowArray]})
+    console.log(state)
+    return ({openWindows: [...state.openWindows, ...newWindowArray], activeWindowId: newWindow.windowId})
   }),
-  closeWindow: (windowId: string) => set(state => ({openWindows: state.openWindows.filter(window => window.windowId !== windowId)}))
+  closeWindow: (windowId: string) => set(state => ({openWindows: state.openWindows.filter(window => window.windowId !== windowId)})),
+  activeWindowId: ''
 }));
 
 export const initState = () => {

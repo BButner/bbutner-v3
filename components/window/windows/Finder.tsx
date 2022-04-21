@@ -5,7 +5,7 @@ import {WindowButtons} from "../WindowButtons";
 export const Finder: React.FC<WindowProps> = ({windowId}) => {
   const controls = useDragControls();
   return (
-    <Window dragControls={controls} className="bg-transparent">
+    <Window windowId={windowId} dragControls={controls} className="bg-transparent">
       <Window.DragAreaContent dragControls={controls}>
         <div className="h-12 flex items-center px-4 w-[182px]">
           <WindowButtons windowId={windowId}/>
