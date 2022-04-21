@@ -13,7 +13,7 @@ export const Finder: React.FC = () => {
       </Window.DragAreaContent>
       <Window.Content className="min-w-[300px]">
         <div className="flex">
-          <div className="w-[182px] h-full p-2 bg-zinc-200/60 backdrop-blur-xl pt-12 rounded-l-lg">
+          <div className="w-[182px] h-full p-2 bg-zinc-200/60 backdropBlur pt-12 rounded-l-lg">
             <p>Testing</p>
             <p>Testing</p>
             <p>Testing</p>

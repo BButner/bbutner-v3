@@ -21,7 +21,7 @@ export const Panel: React.FC<ChildrenProps & AdditionalClassNames & PanelProps> 
   return (
     <Popover.Panel className={clsx(
       'absolute bg-white/50 dark:bg-dark-content/70 dark:text-white left-0 top-full mt-[8px] origin-top-right outline-none rounded',
-      'backdrop-blur-lg text-xs text-gray-800 whitespace-nowrap p-2 space-y-1 w-auto w-fit shadow-lg',
+      'backdropBlur text-xs text-gray-800 whitespace-nowrap p-2 space-y-1 w-auto w-fit shadow-lg',
       position === 'left' ? 'left-0' : 'right-0',
       className
     )}>

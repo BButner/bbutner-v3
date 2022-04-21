@@ -7,7 +7,7 @@ export const AboutThisSite: React.FC = () => {
   const controls = useDragControls();
 
   return (
-    <Window dragControls={controls}>
+    <Window dragControls={controls} className="w-fit">
       <Window.DragAreaContent dragControls={controls} className="bg-white dark:bg-dark-title rounded-t-lg pl-4">
         <WindowButtons/>
       </Window.DragAreaContent>

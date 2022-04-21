@@ -22,6 +22,10 @@ p
   margin: 0
   padding: 0
 
+// Because backdrop-blur is broken in Chrome
+.backdropBlur
+  backdrop-filter: blur(50px)
+
 .noSelect
   *
     -webkit-touch-callout: none
