@@ -18,7 +18,7 @@ export const DragAreaContent: React.FC<ChildrenProps & DragControlProps & Additi
   return (
     <div
       className={clsx(
-        'h-12 inset-0 flex items-center absolute inset-0 z-50',
+        'h-12 inset-0 flex items-center absolute inset-0 z-30',
         className,
       )}
       onPointerDown={(e) => dragControls.start(e)}>
