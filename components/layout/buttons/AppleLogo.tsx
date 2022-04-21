@@ -2,9 +2,21 @@ import {BarButton} from "../BarButton";
 import React from "react";
 import {useStore} from "../../../lib/state/state";
 import styles from "./AppleLogo.module.sass";
+import {AboutThisSite} from "../../window/windows/AboutThisSite";
 
 export const AppleLogo: React.FC = () => {
   const store = useStore();
+
+  const openWindow = () => {
+    const windowId = 'AboutThisSite';
+
+    store.openWindow({
+      window: <AboutThisSite windowId={windowId}/>,
+      iconHref: "/images/dock_icons/finder.png",
+      isMinimized: false,
+      windowId
+    });
+  }
 
   return (
     <BarButton>
@@ -17,7 +29,7 @@ export const AppleLogo: React.FC = () => {
         </svg>
       </BarButton.Button>
       <BarButton.Panel position="left" className={styles.panel}>
-        <button>About This Site</button>
+        <button onClick={openWindow}>About This Site</button>
         <hr/>
         <button>System Preferences</button>
       </BarButton.Panel>

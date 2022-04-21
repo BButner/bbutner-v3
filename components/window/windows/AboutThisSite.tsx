@@ -1,17 +1,18 @@
-import {Window} from "../Window";
+import {Window, WindowProps} from "../Window";
 import {useDragControls} from "framer-motion";
 import {WindowButtons} from "../WindowButtons";
 import Image from "next/image";
 
-export const AboutThisSite: React.FC = () => {
+export const AboutThisSite: React.FC<WindowProps> = ({windowId}) => {
   const controls = useDragControls();
 
   return (
     <Window dragControls={controls} className="w-fit">
       <Window.DragAreaContent dragControls={controls} className="bg-white dark:bg-dark-title rounded-t-lg pl-4">
-        <WindowButtons/>
+        <WindowButtons windowId={windowId}/>
       </Window.DragAreaContent>
-      <Window.Content className="pt-24 bg-zinc-100 dark:bg-dark-content rounded-lg flex items-center justify-center space-x-12 p-12">
+      <Window.Content
+        className="pt-24 bg-zinc-100 dark:bg-dark-content rounded-lg flex items-center justify-center space-x-12 p-12">
         <div
           className="p-1.5 bg-gradient-to-b from-white to-gray-300 rounded-full flex items-center justify-center drop-shadow">
           <Image

@@ -1,4 +1,4 @@
-import {AdditionalClassNames, ChildrenProps} from "../../lib/props";
+import {AdditionalClassNames, ChildrenProps, OnClickButton} from "../../lib/props";
 import clsx from "clsx";
 import {Menu, Popover} from "@headlessui/react";
 import styles from "./BarButton.module.sass";
@@ -7,13 +7,14 @@ interface PanelProps {
   position: 'left' | 'right';
 }
 
-export const Button: React.FC<ChildrenProps & AdditionalClassNames> = ({children, className}) => {
+export const Button: React.FC<ChildrenProps & AdditionalClassNames & OnClickButton> = ({children, className, onClick}) => {
   return (
     <Popover.Button className={clsx(
       'active:bg-black/10 dark:active:bg-white/10 px-2.5 rounded h-[26px] m-0 flex items-center justify-center',
       'outline-none',
       className,
-    )}>{children}</Popover.Button>
+    )}
+    onClick={onClick}>{children}</Popover.Button>
   )
 }
 

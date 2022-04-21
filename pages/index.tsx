@@ -12,8 +12,6 @@ const Index: NextPage = () => {
   useEffect(() => {
     if (desktopRef) useStore.setState({desktop: desktopRef});
 
-    useStore.setState({openWindows: [...state.openWindows, {window: <AboutThisSite/>}]})
-
     // setTimeout(() => {
     //   useStore.setState({openWindows: [...useStore.getState().openWindows, {window: <AboutThisSite/>}]})
     //   console.log('pls')

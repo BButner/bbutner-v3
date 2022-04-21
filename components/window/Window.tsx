@@ -6,6 +6,10 @@ import clsx from "clsx";
 import {WindowButtons} from "./WindowButtons";
 import {RefObject, useEffect, useRef, useState} from "react";
 
+export interface WindowProps {
+  windowId: string;
+}
+
 interface DragControlProps {
   dragControls: DragControls;
 }
