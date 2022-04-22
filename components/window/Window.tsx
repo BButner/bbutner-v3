@@ -19,7 +19,9 @@ export const DragAreaContent: React.FC<ChildrenProps & DragControlProps & Additi
         'h-12 inset-0 flex items-center absolute inset-0 z-30',
         className,
       )}
-      onPointerDown={(e) => dragControls.start(e)}>
+      onPointerDown={(e) => {
+        dragControls.start(e, { snapToCursor: false, cursorProgress: { x: 50, y: 50 } })
+      }}>
       {children}
     </div>
   )
@@ -40,21 +42,27 @@ const WindowComponent: React.FC<ChildrenProps & AdditionalClassNames & DragContr
     const windowRef = useRef(null);
     const [top, setTop] = useState(0);
     const [left, setLeft] = useState(0);
-    const [translateX, setTranslateX] = useState('');
-    const [translateY, setTranslateY] = useState('');
+    const [initialLeft, setInitialLeft] = useState(0);
+    const [initialTop, setInitialTop] = useState(0);
 
     useEffect(() => {
       if (store.desktop && windowRef.current && top === 0 && left === 0) {
-        console.log(top, left, windowId)
         const desktop = (store.desktop.current as Element);
         const window = (windowRef.current as Element);
         const centerTop = (desktop.clientHeight / 2) - (window.clientHeight / 2);
         const centerLeft = (desktop.clientWidth / 2) - (window.clientWidth / 2);
-        const savedX = localStorage.getItem(`${windowId}X`);
-        const savedY = localStorage.getItem(`${windowId}Y`);
+        const savedLeft = localStorage.getItem(`${windowId}Left`);
+        const savedTop = localStorage.getItem(`${windowId}Top`);
 
-        setTop(centerTop + Number(savedY));
-        setLeft(centerLeft + Number(savedX));
+        if (savedTop && savedLeft) {
+          setTop(Number(savedTop));
+          setInitialTop(Number(savedTop));
+          setLeft(Number(savedLeft));
+          setInitialLeft(Number(savedLeft));
+        } else {
+          setTop(centerTop);
+          setLeft(centerLeft);
+        }
       }
     }, [store.desktop]);
 
@@ -77,27 +85,29 @@ const WindowComponent: React.FC<ChildrenProps & AdditionalClassNames & DragContr
         }}
         onDragEnd={() => {
           document.documentElement.classList.remove('noSelect');
-          if (windowRef.current) {
+          if (windowRef.current && store.desktop) {
             const w = (windowRef.current as Element);
+            const desktop = (store.desktop.current as Element);
+            const savedLeft = localStorage.getItem(`${windowId}Left`);
+            const savedTop = localStorage.getItem(`${windowId}Top`);
             const matrix = new WebKitCSSMatrix(window.getComputedStyle(w).transform);
 
-            const prevX = localStorage.getItem(`${windowId}X`);
-            const prevY = localStorage.getItem(`${windowId}Y`);
-
-            if (prevX && prevY) {
-              localStorage.setItem(`${windowId}X`, (matrix.m41 + Number(prevX)).toString());
-              localStorage.setItem(`${windowId}Y`, (matrix.m42 + Number(prevY)).toString());
+            if (savedTop && savedLeft) {
+              localStorage.setItem(`${windowId}Top`, (initialTop + matrix.m42).toString());
+              localStorage.setItem(`${windowId}Left`, (initialLeft + matrix.m41).toString());
             } else {
-              localStorage.setItem(`${windowId}X`, matrix.m41.toString());
-              localStorage.setItem(`${windowId}Y`, matrix.m42.toString());
+              const centerTop = (desktop.clientHeight / 2) - (w.clientHeight / 2);
+              const centerLeft = (desktop.clientWidth / 2) - (w.clientWidth / 2);
+              localStorage.setItem(`${windowId}Top`, (centerTop + matrix.m42).toString());
+              localStorage.setItem(`${windowId}Left`, (centerLeft + matrix.m41).toString());
             }
           }
         }}
-        style={{top, left, transform: `translate(${translateX}px,${translateY}px)`}}
+        style={{top: top + 'px', left: left + 'px'}}
         className={clsx(
           'rounded-lg',
           'text-zinc-900 dark:text-white transition-colors transition-opacity duration-200',
-          'absolute shadow-lg',
+          'absolute shadow',
           top == 0 && left == 0 ? 'opacity-0' : 'opacity-1',
           store.activeWindowId === windowId ? 'z-40' : '',
           className
