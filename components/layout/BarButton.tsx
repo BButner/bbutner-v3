@@ -21,10 +21,11 @@ export const Button: React.FC<ChildrenProps & AdditionalClassNames & OnClickButt
 export const Panel: React.FC<ChildrenProps & AdditionalClassNames & PanelProps> = ({children, className, position}) => {
   return (
     <Popover.Panel className={clsx(
-      'absolute bg-white/50 dark:bg-dark-content/70 dark:text-white left-0 top-full mt-[8px] origin-top-right outline-none rounded',
-      'backdropBlur text-xs text-gray-800 whitespace-nowrap p-2 space-y-1 w-auto w-fit shadow-lg',
+      'absolute bg-white/50 dark:bg-dark-content/70 dark:text-white left-0 top-full mt-[8px] outline-none rounded',
+      'backdropBlur text-xs text-gray-800 whitespace-nowrap p-2 space-y-1 w-auto w-fit shadow-lg z-50',
       position === 'left' ? 'left-0' : 'right-0',
-      className
+      className,
+      styles.panel
     )}>
       {children}
     </Popover.Panel>
