@@ -1,6 +1,7 @@
 import {BarButton} from "../BarButton";
 import styles from "./ControlCenter.module.sass";
 import {Switch} from "@headlessui/react";
+import {useStore} from "../../../lib/state/state";
 
 export const ControlCenter: React.FC = () => {
   const width = '16px';
@@ -9,28 +10,14 @@ export const ControlCenter: React.FC = () => {
   return (
     <BarButton>
       <BarButton.Button>
-        <div>
-          <Switch
-            className="border border-dark-content dark:border-white relative flex items-center rounded-full"
-            style={{height,width,marginBottom:'1px'}}
-            checked={true}
-            onChange={() => {}}>
-            <span
-              style={{left:'1px'}}
-              className={`bg-dark-content dark:bg-white inline-block w-1 h-1 absolute transform rounded-full`}
-            />
-          </Switch>
-          <Switch
-            className="bg-dark-content border border-dark-content dark:border-white dark:bg-white w-4 relative flex items-center rounded-full"
-            style={{width,height}}
-            checked={true}
-            onChange={() => {}}>
-            <span
-              style={{right:'1px'}}
-              className={`dark:bg-dark-content bg-zinc-100/90 inline-block w-1 h-1 absolute transform bg-white rounded-full`}
-            />
-          </Switch>
-        </div>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 29 29"
+          width={16}>
+          <path
+            fill={useStore.getState().darkMode ? 'bg-white' : 'bg-dark-content'}
+            d="M7.5,13h14a5.5,5.5,0,0,0,0-11H7.5a5.5,5.5,0,0,0,0,11Zm0-9h14a3.5,3.5,0,0,1,0,7H7.5a3.5,3.5,0,0,1,0-7Zm0,6A2.5,2.5,0,1,0,5,7.5,2.5,2.5,0,0,0,7.5,10Zm14,6H7.5a5.5,5.5,0,0,0,0,11h14a5.5,5.5,0,0,0,0-11Zm1.43439,8a2.5,2.5,0,1,1,2.5-2.5A2.5,2.5,0,0,1,22.93439,24Z"/>
+        </svg>
       </BarButton.Button>
     </BarButton>
   )
