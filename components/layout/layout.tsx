@@ -8,11 +8,7 @@ import {AppleLogo} from "./buttons/AppleLogo";
 
 export const Layout: React.FC<ChildrenProps> = ({children}) => {
   return (
-    <div className="w-screen h-screen relative" style={{
-      backgroundImage: 'url("/images/monterey.jpg")',
-      backgroundRepeat: 'no-repeat',
-      backgroundSize: 'cover'
-    }}>
+    <div className="w-screen h-screen relative">
       <Wallpaper/>
       <div className="w-screen h-screen relative flex flex-col">
         <div className={clsx(
