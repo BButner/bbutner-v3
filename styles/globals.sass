@@ -2,6 +2,9 @@
 @tailwind components
 @tailwind utilities
 
+html
+  overflow: hidden
+
 html,
 body
   padding: 0
@@ -10,6 +13,8 @@ body
 
 body
   background-image: url("/images/monterey.jpg")
+  background-repeat: no-repeat
+  background-size: cover
 
 a
   @apply text-blue-500
@@ -34,3 +39,4 @@ p
     -moz-user-select: none
     -ms-user-select: none
     user-select: none
+    cursor: default !important
