@@ -17,7 +17,7 @@ export const ControlCenter: React.FC = () => {
             onChange={() => {}}>
             <span
               style={{left:'1px'}}
-              className={`bg-dark-content dark:bg-white inline-block w-1 h-1 absolute transform bg-white rounded-full`}
+              className={`bg-dark-content dark:bg-white inline-block w-1 h-1 absolute transform rounded-full`}
             />
           </Switch>
           <Switch
