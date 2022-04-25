@@ -2,6 +2,8 @@ import {AdditionalClassNames, ChildrenProps, OnClickButton} from "../../lib/prop
 import clsx from "clsx";
 import {Menu, Popover} from "@headlessui/react";
 import styles from "./BarButton.module.sass";
+import {useStore} from "../../lib/state/state";
+import {WallpaperEnum} from "../../lib/wallpapers";
 
 interface PanelProps {
   position: 'left' | 'right';
@@ -19,13 +21,24 @@ export const Button: React.FC<ChildrenProps & AdditionalClassNames & OnClickButt
 }
 
 export const Panel: React.FC<ChildrenProps & AdditionalClassNames & PanelProps> = ({children, className, position}) => {
+  const store = useStore();
+
+  const getWallpaper = (): string => {
+    if (store.wallpaper.wallpaper === WallpaperEnum.MONTEREY) {
+      return store.darkMode ? styles.panelMontereyDark : styles.panelMonterey;
+    }
+
+    return '';
+  }
+
   return (
     <Popover.Panel className={clsx(
-      'absolute bg-white/50 dark:bg-dark-content/70 dark:text-white origin-top-right left-0 top-full mt-[8px] outline-none rounded',
+      'absolute dark:text-white origin-top-right left-0 top-full mt-[8px] outline-none rounded',
       'text-xs text-gray-800 whitespace-nowrap p-2 space-y-1 w-auto w-fit shadow-lg backdropBlur',
       position === 'left' ? 'left-0' : 'right-0',
       className,
-      styles.panel
+      styles.panel,
+      getWallpaper()
     )}>
       {children}
     </Popover.Panel>

@@ -1,4 +1,4 @@
-enum WallpaperEnum {
+export enum WallpaperEnum {
   MONTEREY,
 }
 
