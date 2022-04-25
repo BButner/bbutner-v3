@@ -12,7 +12,7 @@ export const AppleLogo: React.FC = () => {
 
     store.openWindow({
       window: <AboutThisSite windowId={windowId}/>,
-      iconHref: "/images/dock_icons/finder.png",
+      iconHref: "/images/dock_icons/about.png",
       isMinimized: false,
       windowId
     });
