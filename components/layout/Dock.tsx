@@ -60,7 +60,7 @@ const DockIcon: React.FC<DockIconProps & OnClickButton & WindowProps> = ({imageS
     <div
       className={clsx(
         store.openWindows.filter(window => window.windowId === windowId).length > 0 ? 'opacity-1' : 'opacity-0',
-        'bg-dark-content w-1 h-1 rounded-full m-auto mt-0.5'
+        'bg-dark-content dark:bg-zinc-400/80 w-1 h-1 rounded-full m-auto mt-0.5 transition-all duration-200'
       )}/>
   </div>
 }
