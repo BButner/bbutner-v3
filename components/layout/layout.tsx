@@ -8,12 +8,16 @@ import {AppleLogo} from "./buttons/AppleLogo";
 
 export const Layout: React.FC<ChildrenProps> = ({children}) => {
   return (
-    <div className="w-screen h-screen relative">
+    <div className="w-screen h-screen relative" style={{
+      backgroundImage: 'url("/images/monterey.jpg")',
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: 'cover'
+    }}>
       <Wallpaper/>
       <div className="w-screen h-screen relative flex flex-col">
         <div className={clsx(
           styles.topBar,
-          "bg-white/40 dark:bg-gray-900/50 z-50"
+          'bg-white/40 dark:bg-gray-900/50 z-50'
         )}>
           <AppleLogo/>
           <BarIcons/>
