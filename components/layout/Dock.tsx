@@ -27,7 +27,7 @@ export const Dock: React.FC = () => {
 			<DockIcon windowId={WindowId.AboutThisSite} key={WindowId.AboutThisSite}
 								onClick={openAbout}/>
 			<div className={styles.divider}/>
-			<DockIcon windowId="trash" key={"trash"} transparent/>
+			<DockIcon windowId="Trash" key={"Trash"} transparent/>
 		</div>
 	)
 }
