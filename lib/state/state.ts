@@ -1,8 +1,6 @@
 import create from "zustand";
 import {IWallpaper, wallpapers} from "../wallpapers";
 import {RefObject} from "react";
-import {Finder} from "../../components/window/windows/Finder";
-import {AboutThisSite} from "../../components/window/windows/AboutThisSite";
 
 let stateInitialized = false;
 

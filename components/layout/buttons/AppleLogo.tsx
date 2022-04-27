@@ -8,7 +8,7 @@ export const AppleLogo: React.FC = () => {
   const store = useStore();
 
   const openWindow = () => {
-	  store.openWindow(WindowId.AboutThisSite);
+    store.openWindow(WindowId.AboutThisSite);
   }
 
   return (

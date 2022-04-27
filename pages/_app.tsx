@@ -1,10 +1,10 @@
 import '../styles/globals.sass'
-import type { AppProps } from 'next/app'
+import type {AppProps} from 'next/app'
 import {Layout} from "../components/layout/layout";
 import React, {useEffect} from "react";
 import {initState, loadStateFromLocal, useStore} from "../lib/state/state";
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({Component, pageProps}: AppProps) {
   const updateDarkModeState = (darkMode: boolean) => {
     useStore.setState({darkMode});
   }
@@ -30,8 +30,8 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, []);
 
   return <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <Component {...pageProps} />
+  </Layout>
 }
 
 export default MyApp

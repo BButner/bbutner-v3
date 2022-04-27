@@ -9,16 +9,21 @@ interface PanelProps {
   position: 'left' | 'right';
 }
 
-export const Button: React.FC<ChildrenProps & AdditionalClassNames & OnClickButton> = ({children, className, onClick}) => {
-  return (
-    <Popover.Button className={clsx(
-      'active:bg-black/10 dark:active:bg-white/10 px-2.5 rounded h-[26px] m-0 flex items-center justify-center',
-      'outline-none z-50',
-      className,
-    )}
-    onClick={onClick}>{children}</Popover.Button>
-  )
-}
+export const Button: React.FC<ChildrenProps & AdditionalClassNames & OnClickButton> =
+  ({
+     children,
+     className,
+     onClick
+   }) => {
+    return (
+      <Popover.Button className={clsx(
+        'active:bg-black/10 dark:active:bg-white/10 px-2.5 rounded h-[26px] m-0 flex items-center justify-center',
+        'outline-none z-50',
+        className,
+      )}
+                      onClick={onClick}>{children}</Popover.Button>
+    )
+  }
 
 export const Panel: React.FC<ChildrenProps & AdditionalClassNames & PanelProps> = ({children, className, position}) => {
   const store = useStore();
@@ -56,4 +61,4 @@ const BarButtonComponent: React.FC<ChildrenProps & AdditionalClassNames> = ({chi
   )
 }
 
-export const BarButton = Object.assign(BarButtonComponent, { Button, Panel })
+export const BarButton = Object.assign(BarButtonComponent, {Button, Panel})

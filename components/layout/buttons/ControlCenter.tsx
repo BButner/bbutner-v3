@@ -1,6 +1,4 @@
 import {BarButton} from "../BarButton";
-import styles from "./ControlCenter.module.sass";
-import {Switch} from "@headlessui/react";
 import {useStore} from "../../../lib/state/state";
 
 export const ControlCenter: React.FC = () => {
