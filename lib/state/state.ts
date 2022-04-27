@@ -1,6 +1,7 @@
 import create from "zustand";
 import {IWallpaper, wallpapers} from "../wallpapers";
 import {RefObject} from "react";
+import {ThemeTitle, updateCurrentTheme} from "../theme";
 
 let stateInitialized = false;
 
@@ -13,7 +14,8 @@ interface OpenWindow {
 
 interface IStore {
   wallpaper: IWallpaper;
-  darkMode: boolean;
+  theme: string;
+  currentThemeMode: string;
   desktop: RefObject<Element> | null;
   openWindowIds: string[];
   minimizedWindowIds: string[];
@@ -26,8 +28,9 @@ interface IStore {
 
 export const useStore = create<IStore>((set, get) => ({
   wallpaper: wallpapers[0],
-  darkMode: false,
   desktop: null,
+  theme: ThemeTitle.Auto,
+  currentThemeMode: 'light',
   openWindowIds: [],
   minimizedWindowIds: [],
   activeWindowId: '',
@@ -52,17 +55,12 @@ export const useStore = create<IStore>((set, get) => ({
 export const initState = () => {
   if (stateInitialized) return;
 
-  useStore.subscribe((state, _) => {
-    if (state.darkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
+  useStore.subscribe((newState, prevState) => {
+    if (newState.theme !== prevState.theme) {
+      localStorage.setItem('theme', newState.theme);
+      updateCurrentTheme();
     }
   });
 
   stateInitialized = true;
 }
-
-export const loadStateFromLocal = () => {
-  console.log(localStorage.getItem('bbutner.com'));
-};

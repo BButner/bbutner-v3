@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import clsx from "clsx";
 import {useStore} from "../../lib/state/state";
+import { ThemeTitle } from "../../lib/theme";
 
 export const Wallpaper: React.FC = () => {
   const [show, setShow] = useState<boolean>(false);
@@ -9,7 +10,7 @@ export const Wallpaper: React.FC = () => {
   useEffect(() => {
     const unsub = useStore
       .subscribe((state, _) => {
-        setShow(state.darkMode);
+        setShow(state.theme === ThemeTitle.Dark);
       });
 
     return () => {

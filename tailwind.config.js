@@ -19,4 +19,5 @@ module.exports = {
       addVariant('!supports-backdrop', '@supports not (backdrop-filter: none)')
     })
   ],
+  darkMode: 'class'
 }
