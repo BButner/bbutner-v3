@@ -1,10 +1,8 @@
 import {useStore} from "../../lib/state/state";
 import Image from "next/image";
-import {AdditionalClassNames, OnClickButton} from "../../lib/props";
-import {Finder} from "../window/windows/Finder";
+import {OnClickButton} from "../../lib/props";
 import styles from "./Dock.module.sass";
 import clsx from "clsx";
-import {AboutThisSite} from "../window/windows/AboutThisSite";
 import React from "react";
 import {WindowProps} from "../window/Window";
 import {WindowId} from "../../lib/windows";
@@ -45,10 +43,10 @@ const DockIcon: React.FC<DockIconProps & OnClickButton & WindowProps> = ({imageS
     <button onClick={onClick} className={clsx(styles.dockButton, !transparent ? 'bg-zinc-700' : '')}>
       <Image key={key} src={imageSrc} width={32} height={32}/>
     </button>
-    {/*<div*/}
-    {/*  className={clsx(*/}
-    {/*    store.windows.filter(window => window.windowId === windowId).length > 0 ? 'opacity-1' : 'opacity-0',*/}
-    {/*    'bg-dark-content dark:bg-zinc-400/80 w-1 h-1 rounded-full m-auto mt-0.5 transition-all duration-200'*/}
-    {/*  )}/>*/}
+    <div
+      className={clsx(
+		store.openWindowIds.includes(windowId) ? 'opacity-1' : 'opacity-0',
+        'bg-dark-content dark:bg-zinc-400/80 w-1 h-1 rounded-full m-auto mt-0.5 transition-all duration-200'
+      )}/>
   </div>
 }
