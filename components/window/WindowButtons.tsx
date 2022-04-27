@@ -7,17 +7,17 @@ export const WindowButtons: React.FC<WindowProps> = ({windowId}) => {
   const store = useStore();
 
   const closeWindow = () => {
-    store.closeWindow(windowId)
+	  store.closeWindow(windowId);
   }
 
   const minimizeWindow = () => {
-
+	  store.closeWindow(windowId);
   }
 
   return (
     <div className="flex space-x-2">
       <button className={styles.buttonClose} onClick={closeWindow}/>
-      <button className={styles.buttonMinimize}/>
+      <button className={styles.buttonMinimize} onClick={minimizeWindow}/>
       <button className={styles.buttonMaximize}/>
     </div>
   )
