@@ -17,7 +17,7 @@ export const Clock: React.FC = () => {
     updateTime();
   }, []);
 
-  setTimeout(updateTime, 1000);
+  setInterval(updateTime, 1000);
 
   return (
     <BarButton>
