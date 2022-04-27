@@ -2,20 +2,13 @@ import {BarButton} from "../BarButton";
 import React from "react";
 import {useStore} from "../../../lib/state/state";
 import styles from "./AppleLogo.module.sass";
-import {AboutThisSite} from "../../window/windows/AboutThisSite";
+import {WindowId} from "../../../lib/windows";
 
 export const AppleLogo: React.FC = () => {
   const store = useStore();
 
   const openWindow = () => {
-    const windowId = 'AboutThisSite';
-
-    store.openWindow({
-      window: <AboutThisSite windowId={windowId}/>,
-      iconHref: "/images/dock_icons/aboutthissite.png",
-      isMinimized: false,
-      windowId
-    });
+	  store.openWindow(WindowId.AboutThisSite);
   }
 
   return (
