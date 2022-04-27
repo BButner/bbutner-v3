@@ -20,7 +20,7 @@ export const Dock: React.FC = () => {
 
   return (
     <div
-      className="flex items-center px-2 pt-2 pb-0.5 bg-white/40 dark:bg-gray-900/80 backdropBlur rounded-xl dark:border dark:border-dark-title space-x-3">
+      className="flex items-center px-2 pt-2 pb-0.5 bg-white/40 dark:bg-dark-content/50 backdropBlur rounded-xl dark:border dark:border-dark-title space-x-3">
       <DockIcon windowId={WindowId.Finder} key={WindowId.Finder}
                 onClick={openFinder}/>
       <div className={styles.divider}/>

@@ -5,6 +5,7 @@ import styles from "./BarButton.module.sass";
 import {useStore} from "../../lib/state/state";
 import {WallpaperEnum} from "../../lib/wallpapers";
 import {ThemeTitle} from "../../lib/theme";
+import { useEffect } from "react";
 
 interface PanelProps {
   position: 'left' | 'right';
@@ -45,6 +46,7 @@ export const Panel: React.FC<ChildrenProps & AdditionalClassNames & PanelProps> 
       position === 'left' ? 'left-0' : 'right-0',
       className,
       styles.panel,
+      store.currentThemeMode === ThemeTitle.Dark ? styles.panelDark : styles.panelLight, // this is dumb
       getWallpaper(store.currentThemeMode)
     )}>
       {children}
