@@ -7,11 +7,11 @@ export const WindowButtons: React.FC<WindowProps> = ({windowId}) => {
   const store = useStore();
 
   const closeWindow = () => {
-	  store.closeWindow(windowId);
+    store.closeWindow(windowId);
   }
 
   const minimizeWindow = () => {
-	  store.closeWindow(windowId);
+    store.minimizeWindow(windowId);
   }
 
   return (
