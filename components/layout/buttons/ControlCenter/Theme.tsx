@@ -29,7 +29,6 @@ export const Theme: React.FC = () => {
 
   return (
     <div>
-      <AnimateSharedLayout>
         <ul className="flex justify-center list-none h-6 items-center bg-zinc-300/60 rounded">
           {themes.map(theme =>
             <li
@@ -53,7 +52,6 @@ export const Theme: React.FC = () => {
                 </motion.div>}
             </li>)}
         </ul>
-      </AnimateSharedLayout>
     </div>
   )
 }

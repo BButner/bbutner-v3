@@ -31,8 +31,6 @@ export const Panel: React.FC<ChildrenProps & AdditionalClassNames & PanelProps> 
   const store = useStore();
 
   const getWallpaper = (themeMode: string): string => {
-    console.log(themeMode);
-
     if (store.wallpaper.wallpaper === WallpaperEnum.MONTEREY) {
       return themeMode === ThemeTitle.Dark ? styles.panelMontereyDark : styles.panelMonterey;
     }

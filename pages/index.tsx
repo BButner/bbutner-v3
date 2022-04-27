@@ -15,8 +15,6 @@ const Index: NextPage = () => {
 
   useEffect(() => {
     if (desktopRef && !state.desktop) useStore.setState({desktop: desktopRef});
-
-    console.log('testing')
   }, [state.activeWindowId, state.openWindowIds])
 
   return (

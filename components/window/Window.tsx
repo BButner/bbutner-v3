@@ -69,8 +69,6 @@ const WindowComponent: React.FC<ChildrenProps & AdditionalClassNames & DragContr
           setLeft(centerLeft);
         }
       }
-
-      console.log('mounted');
     }, [store.desktop]);
 
     if (!store.desktop) return <></>
