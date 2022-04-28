@@ -29,7 +29,7 @@ export const Theme: React.FC = () => {
 
   return (
     <div>
-        <ul className="flex justify-center list-none h-6 items-center bg-zinc-300/60 dark:bg-dark-title rounded">
+        <ul className="flex justify-center list-none h-6 items-center bg-zinc-300/60 dark:bg-dark-content rounded">
           {themes.map(theme =>
             <li
               className="h-full relative z-10 px-2 flex items-center justify-center"
