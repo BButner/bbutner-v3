@@ -27,7 +27,7 @@ const Index: NextPage = () => {
         {shouldBeOpen(WindowId.Finder) &&
           <Finder windowId={WindowId.Finder}/>}
       </div>
-      <div className="w-screen h-12 flex justify-center">
+      <div className="w-screen h-12 flex justify-center mb-1">
         <Dock/>
       </div>
     </div>
