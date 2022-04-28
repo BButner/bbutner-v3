@@ -10,7 +10,7 @@ export const Wallpaper: React.FC = () => {
   useEffect(() => {
     const unsub = useStore
       .subscribe((state, _) => {
-        setShow(state.theme === ThemeTitle.Dark);
+        setShow(state.currentThemeMode === ThemeTitle.Dark);
       });
 
     return () => {
