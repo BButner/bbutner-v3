@@ -26,6 +26,8 @@ export const Dock: React.FC = () => {
       <div className={styles.divider}/>
       <DockIcon windowId={WindowId.AboutThisSite} key={WindowId.AboutThisSite}
                 onClick={openAbout}/>
+      <DockIconUrl windowId={WindowId.GitHub} href="https://github.com/bbutner"/>
+      <DockIconUrl windowId={WindowId.LinkedIn} href="https://www.linkedin.com/in/beau-butner-1491b7172/"/>
       <div className={styles.divider}/>
       <DockIcon windowId="Trash" key={"Trash"} transparent/>
     </div>
@@ -48,6 +50,24 @@ const DockIcon: React.FC<DockIconProps & OnClickButton & WindowProps> = ({key, o
       className={clsx(
         store.openWindowIds.includes(windowId) ? 'opacity-1' : 'opacity-0',
         'bg-dark-content dark:bg-zinc-400/80 w-1 h-1 rounded-full m-auto mt-0.5 transition-all duration-200'
+      )}/>
+  </div>
+}
+
+interface DockIconUrlProps {
+  href: string;
+  transparent?: boolean;
+  windowId: string;
+}
+
+const DockIconUrl: React.FC<DockIconUrlProps> = ({href, transparent, windowId}) => {
+  return <div className="m-auto">
+    <a target="_" href={href} className={clsx(styles.dockButton, !transparent ? 'bg-zinc-700' : '')}>
+      <Image src={`/images/dock_icons/${windowId}.png`} width={32} height={32}/>
+    </a>
+    <div
+      className={clsx(
+        'w-1 h-1 mt-0.5'
       )}/>
   </div>
 }

@@ -60,10 +60,16 @@ const WindowComponent: React.FC<ChildrenProps & AdditionalClassNames & DragContr
         const savedTop = localStorage.getItem(`${windowId}Top`);
 
         if (savedTop && savedLeft) {
-          setTop(Number(savedTop));
-          setInitialTop(Number(savedTop));
-          setLeft(Number(savedLeft));
-          setInitialLeft(Number(savedLeft));
+          let top = Number(savedTop);
+          let left = Number(savedLeft);
+
+          if (top < 0 || top > window.clientHeight) top = centerTop;
+          if (left < 0 || left > window.clientWidth) left = centerLeft;
+
+          setTop(top);
+          setInitialTop(top);
+          setLeft(left);
+          setInitialLeft(left);
         } else {
           setTop(centerTop);
           setLeft(centerLeft);
