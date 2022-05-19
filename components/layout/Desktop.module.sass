@@ -1,0 +1,31 @@
+.desktopIcon
+  @apply w-24 h-28 m-1 space-y-1
+
+  &:focus, &:active
+    @apply z-10
+
+    .desktopIconWrapper
+      @apply bg-black/50
+      @apply border-zinc-600
+
+    .desktopIconTitle
+      @apply bg-blue-500
+
+.desktopIconImage
+  @apply w-12
+  @apply h-12
+  @apply mb-1
+  cursor: pointer
+
+.desktopIconTitle
+  width: fit-content
+  @apply rounded
+  @apply p-0.5
+  margin: 0 auto
+  filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.4)) drop-shadow(0 1px 1px rgb(0 0 0 / 0.4))
+
+.desktopIconWrapper
+  width: fit-content
+  margin: 0 auto
+  @apply p-1 rounded-lg
+  @apply border-2 border-transparent
