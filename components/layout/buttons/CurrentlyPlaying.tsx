@@ -4,6 +4,7 @@ import {getSpotify, SpotifyResponse} from "../../../lib/spotify";
 import {ThemeTitle} from "../../../lib/theme";
 import {useStore} from "../../../lib/state/state";
 import clsx from "clsx";
+import Image from "next/image";
 
 export const CurrentlyPlaying: React.FC = () => {
   const [current, setCurrent] = useState<SpotifyResponse | null>(null);
@@ -93,9 +94,15 @@ export const CurrentlyPlaying: React.FC = () => {
           {current && <div>
             <div
               className="flex items-center max-w-full">
-              <img
-                className="w-12 h-12 rounded-sm mr-2"
-                src={current.album_images[0].url}/>
+              <div className="w-12 mr-2">
+                <Image
+                  alt={`Album image for ${current.album}`}
+                  width={48}
+                  height={48}
+                  layout="fixed"
+                  className="rounded-sm"
+                  src={current.album_images[0].url}/>
+              </div>
               <div className="overflow-hidden">
                 <p className="font-semibold">{current.name}</p>
                 <p className="opacity-75 text-ellipsis max-w-full">{current.artists.join(" ")} - {current.album}</p>
