@@ -13,7 +13,7 @@ export interface SpotifyResponse {
 }
 
 export const getSpotify = async (): Promise<SpotifyResponse | null> => {
-  return fetch("http://api.bbutner.com:8000/spotify")
+  return fetch("https://api.bbutner.com:8000/spotify")
     .then(data => data.json())
     .then(json => {
       return json;
