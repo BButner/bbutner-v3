@@ -35,16 +35,15 @@ export const Dock: React.FC = () => {
 }
 
 interface DockIconProps {
-  key: string | number;
   transparent?: boolean;
 }
 
-const DockIcon: React.FC<DockIconProps & OnClickButton & WindowProps> = ({key, onClick, transparent, windowId}) => {
+const DockIcon: React.FC<DockIconProps & OnClickButton & WindowProps> = ({onClick, transparent, windowId}) => {
   const store = useStore();
 
   return <div className="m-auto">
     <button onClick={onClick} className={clsx(styles.dockButton, !transparent ? 'bg-zinc-700' : '')}>
-      <Image key={key} src={`/images/dock_icons/${windowId}.png`} width={32} height={32}/>
+      <Image src={`/images/dock_icons/${windowId}.png`} width={32} height={32}/>
     </button>
     <div
       className={clsx(
