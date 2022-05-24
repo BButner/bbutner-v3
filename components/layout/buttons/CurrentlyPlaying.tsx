@@ -114,10 +114,10 @@ export const CurrentlyPlaying: React.FC = () => {
               <div
                 className="absolute bg-zinc-800 transition-all duration-200 rounded-xl border border-zinc-100 dark:border-zinc-800 dark:bg-zinc-100"
                 style={{
-                  height: '14px',
+                  height: '12px',
                   width: '4px',
                   left: `calc(${currentCompletion}% - 2px)`,
-                  transform: 'translateY(-9px)'
+                  transform: 'translateY(-8px)'
                 }}>
               </div>
             </div>
