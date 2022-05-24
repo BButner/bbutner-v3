@@ -7,7 +7,6 @@ export const Siri: React.FC = () => {
       <BarButton.Button>
         <Image alt="Siri Logo" src="/images/siri.webp" width={14} height={14}/>
       </BarButton.Button>
-      <BarButton.Panel position="right"/>
     </BarButton>
   )
 }

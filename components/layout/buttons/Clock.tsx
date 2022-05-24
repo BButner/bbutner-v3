@@ -38,9 +38,6 @@ export const Clock: React.FC = () => {
       <BarButton.Button>
         <p className="text-xs dark:text-white w-32">{dateString} {timeString}</p>
       </BarButton.Button>
-      <BarButton.Panel position="right">
-        <p>Testing</p>
-      </BarButton.Panel>
     </BarButton>
   )
 }
