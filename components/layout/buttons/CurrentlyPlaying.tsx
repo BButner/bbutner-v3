@@ -12,6 +12,7 @@ export const CurrentlyPlaying: React.FC = () => {
   const [initialized, setInitialized] = useState<boolean>(false);
   const [currentTime, setCurrentTime] = useState<number>(0);
   const store = useStore();
+  const IMAGE_LENGTH = 48;
 
   useEffect(() => {
     if (!initialized) {
@@ -67,6 +68,21 @@ export const CurrentlyPlaying: React.FC = () => {
     }
   }
 
+  const getAlbumImageSrc = (): string => {
+    if (current && current.album_images.length > 0) {
+      for (let i = current.album_images.length - 1; i >= 0; i--) {
+        if (current.album_images[i].width) {
+          if (current.album_images[i].width! > IMAGE_LENGTH && current.album_images[i].url) {
+            // @ts-ignore
+            return current.album_images[i].url;
+          }
+        }
+      }
+    }
+
+    return '/images/spotify.png';
+  }
+
   return (
     <BarButton>
       <BarButton.Button>
@@ -97,11 +113,12 @@ export const CurrentlyPlaying: React.FC = () => {
               <div className="w-12 mr-2">
                 <Image
                   alt={`Album image for ${current.album}`}
-                  width={48}
-                  height={48}
+                  width={IMAGE_LENGTH}
+                  height={IMAGE_LENGTH}
                   layout="fixed"
+                  quality={100}
                   className="rounded-sm"
-                  src={current.album_images[0].url}/>
+                  src={getAlbumImageSrc()}/>
               </div>
               <div className="overflow-hidden">
                 <p className="font-semibold">{current.name}</p>
