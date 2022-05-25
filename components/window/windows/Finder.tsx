@@ -24,7 +24,7 @@ export const Finder: React.FC<WindowProps> = ({windowId}) => {
       <Window.DragAreaContent dragControls={controls}>
         <div className="h-14 flex items-center w-[900px] justify-between">
           <WindowButtons windowId={windowId} className="pl-4 w-[204px]"/>
-          <div className="w-full h-full rounded-tr-lg border-b dark:border-dark-content dark:hover:border-black">
+          <div className="w-full h-full rounded-tr-lg border-b border-white hover:border-zinc-200 dark:border-dark-content dark:hover:border-black">
           </div>
         </div>
       </Window.DragAreaContent>

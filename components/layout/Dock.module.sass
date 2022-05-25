@@ -15,3 +15,24 @@
 
   &:active img
     opacity: 0.5
+
+.dockIcon
+  @apply m-auto relative
+
+  &:hover .tooltip
+    @apply opacity-100
+
+.tooltip
+  @apply whitespace-nowrap
+  @apply text-xs
+  @apply pb-2
+  @apply opacity-0
+  @apply transition-opacity duration-200
+  @apply absolute bottom-full mb-2 rounded left-1/2 -translate-x-1/2
+
+.triangle
+  @apply m-auto
+  @apply w-0 h-0
+  @apply border-b-0
+  @apply border-l-8 border-l-transparent
+  @apply border-r-8 border-r-transparent

@@ -30,7 +30,7 @@ export const Desktop: React.FC = () => {
         ref={desktopRef}
         className="w-full flex-1 relative overflow-hidden"
         style={{
-          maxHeight: 'calc(100% - 48px)'
+          maxHeight: 'calc(100% - 53px)'
         }}>
         <div
           className="flex flex-1 justify-start"
