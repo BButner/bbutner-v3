@@ -19,7 +19,7 @@ export const CurrentlyPlaying: React.FC = () => {
       initPlayback();
       setInitialized(true);
     }
-  }, [current]);
+  }, []);
 
   const initPlayback = () => {
     refreshSpotify();
@@ -36,6 +36,9 @@ export const CurrentlyPlaying: React.FC = () => {
         if (data && data.progress) {
           setCurrentCompletion((data.progress / data.song_duration) * 100);
           setCurrentTime(data.progress);
+        } else {
+          setCurrentCompletion(0);
+          setCurrentTime(0);
         }
       });
   }
