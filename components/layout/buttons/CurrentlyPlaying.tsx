@@ -107,12 +107,12 @@ export const CurrentlyPlaying: React.FC = () => {
       </BarButton.Button>
       <BarButton.Panel position="right" className="w-72 p-4">
         <>
-          {current && <div>
+          <div>
             <div
               className="flex items-center max-w-full">
               <div className="w-12 mr-2">
                 <Image
-                  alt={`Album image for ${current.album}`}
+                  alt={`Album image for ${current?.album ?? 'NOT PLAYING'}`}
                   width={IMAGE_LENGTH}
                   height={IMAGE_LENGTH}
                   layout="fixed"
@@ -121,8 +121,8 @@ export const CurrentlyPlaying: React.FC = () => {
                   src={getAlbumImageSrc()}/>
               </div>
               <div className="overflow-hidden">
-                <p className="font-semibold">{current.name}</p>
-                <p className="opacity-75 text-ellipsis max-w-full">{current.artists.join(" ")} - {current.album}</p>
+                <p className="font-semibold">{current?.name ?? 'Not Currently Listening'}</p>
+                {current && <p className="opacity-75 text-ellipsis max-w-full">{current.artists.join(" ")} - {current.album}</p>}
               </div>
             </div>
 
@@ -187,7 +187,7 @@ export const CurrentlyPlaying: React.FC = () => {
                 	     C29.302,15.432,29.302,16.568,28.448,17.261z"/>
               </svg>
             </div>
-          </div>}
+          </div>
         </>
       </BarButton.Panel>
     </BarButton>
