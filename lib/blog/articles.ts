@@ -10,7 +10,6 @@ export interface Post {
   excerpt: string;
   readingTime: string;
   slug: string;
-  cover_image: string;
 }
 
 const articlesPath = path.join(process.cwd(), 'data/articles')
