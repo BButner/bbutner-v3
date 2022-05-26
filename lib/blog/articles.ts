@@ -28,6 +28,7 @@ export async function getSlug() {
   });
 }
 
+// @ts-ignore TODO
 export async function getArticleFromSlug(slug) {
   const articleDir = path.join(articlesPath, `${slug}.mdx`);
   const source = fs.readFileSync(articleDir);
@@ -40,6 +41,7 @@ export async function getArticleFromSlug(slug) {
       excerpt: data.excerpt,
       title: data.title,
       publishedAt: data.publishedAt,
+      // @ts-ignore TODO
       readingTime: readingTime(source).text,
       ...data,
     },
@@ -49,6 +51,7 @@ export async function getArticleFromSlug(slug) {
 export async function getAllArticles(): Promise<Post[]> {
   const articles = fs.readdirSync(path.join(process.cwd(), 'data/articles'))
 
+  // @ts-ignore TODO
   return articles.reduce((allArticles, articleSlug) => {
     // get parsed data from mdx files in the "articles" dir
     const source = fs.readFileSync(

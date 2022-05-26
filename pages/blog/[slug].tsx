@@ -10,6 +10,7 @@ import { MDXRemote } from "next-mdx-remote"
 import Head from "next/head"
 import 'highlight.js/styles/atom-one-dark-reasonable.css'
 
+// @ts-ignore TODO
 const BlogPage: NextPage = ({ post: { source, frontmatter } }) => {
   console.log(source);
   return (
@@ -45,6 +46,7 @@ export async function getStaticPaths() {
   }
 }
 
+// @ts-ignore TODO
 export async function getStaticProps({ params }) {
   //fetch the particular file based on the slug
   const { slug } = params
