@@ -18,12 +18,12 @@ const BlogPage: NextPage = ({ post: { source, frontmatter } }) => {
       <Head>
         <title>{frontmatter.title} | BButner</title>
       </Head>
-      <div className="prose w-3/4 lg:w-2/3 max-w-full m-auto my-8">
+      <div className="prose prose-amber prose-pre:shadow-xl dark:prose-invert w-3/4 lg:w-2/3 max-w-full m-auto py-8">
         <h1 className="p-0 m-0">{frontmatter.title}</h1>
-        <p className="text-gray-500 italic">
+        <i className="text-gray-500">
           {dayjs(frontmatter.publishedAt).format('MMMM D, YYYY')} &mdash;{' '}
           {frontmatter.readingTime}
-        </p>
+        </i>
         <div className="content">
           <MDXRemote {...source} />
         </div>

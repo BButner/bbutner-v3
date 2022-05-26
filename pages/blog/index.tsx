@@ -7,9 +7,8 @@ interface BlogIndexProps {
 }
 
 const Index: NextPage<BlogIndexProps> = ({ posts }) => {
-  console.log(posts);
   return (
-    <div className="m-auto prose my-8">
+    <div className="m-auto prose prose-amber dark:prose-invert py-8">
       <h1>BButner Blog</h1>
       <h2>Posts</h2>
       <ul>
