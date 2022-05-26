@@ -17,7 +17,8 @@ module.exports = {
     plugin(function({ addVariant }) {
       addVariant('supports-backdrop', '@supports (backdrop-filter: none)')
       addVariant('!supports-backdrop', '@supports not (backdrop-filter: none)')
-    })
+    }),
+    require('@tailwindcss/typography'),
   ],
   darkMode: 'class'
 }

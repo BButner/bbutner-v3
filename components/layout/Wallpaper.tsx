@@ -19,13 +19,22 @@ export const Wallpaper: React.FC = () => {
   }, []);
 
   return (
-    <div className={clsx(
-      'absolute inset-0 transition-opacity duration-200',
-      show ? 'opacity-1' : 'opacity-0'
-    )} style={{
-      backgroundImage: 'url("/images/' + state.wallpaper.fileNameDark + '")',
-      backgroundRepeat: 'no-repeat',
-      backgroundSize: 'cover'
-    }}/>
+    <>
+      <div className={clsx(
+        'absolute inset-0 transition-opacity duration-200'
+      )} style={{
+        backgroundImage: 'url("/images/' + state.wallpaper.fileName + '")',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover'
+      }}/>
+      <div className={clsx(
+        'absolute inset-0 transition-opacity duration-200',
+        show ? 'opacity-1' : 'opacity-0'
+      )} style={{
+        backgroundImage: 'url("/images/' + state.wallpaper.fileNameDark + '")',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover'
+      }}/>
+    </>
   )
 }

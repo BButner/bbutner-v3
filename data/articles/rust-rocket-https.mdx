@@ -1,0 +1,155 @@
+---
+title: 'Using Rust Rocket 🚀 with HTTPS, nginx, and Docker'
+publishedAt: '2022-05-26'
+excerpt: "Rocket's TLS may not be recommended for production, but that doesn't mean we can't work around it."
+cover_image: 'path/to/where/image/is/stored'
+---
+
+## Introduction
+
+Recently I have been working on redesigning my personal portfolio website, and I wanted to
+make it look like the macOS interface. This in itself is quite an undertaking, however I have
+been making significatn progress.
+
+One component I wanted to add to the Menu Bar was the "Currently Playing" icon, that would,
+of course, display what I'm currently playing. I've interacted with the Spotify API previously
+so I knew that part would not be very difficult, and this wouldn't take very long to implement
+completely.
+
+## Starting
+
+The first task was figuring out where I wanted to host the API server, and what language I wanted to
+write it in. I've been getting into [Rust](https://www.rust-lang.org) lately, so I figured I would start there!
+I searched around and quickly I found that [Rocket](https://rocket.rs) was a fairly popular choice
+to host an API server.
+
+I created my project, and before creating the API server I wanted to get the fetching from Spotify up
+and running before implementing the server. I very quickly found [Rspotify](https://github.com/ramsayleung/rspotify),
+which looked like it would accomplish exactly what I needed to do.
+
+It was actually very simple to contact the Spotify API and get what I was currently playing:
+
+```rust
+let access_token_opt = env::vars().find(|(key, _)| key == ACCESS_TOKEN_KEY);
+let refresh_token_opt = env::vars().find(|(key, _)| key == REFRESH_TOKEN_KEY);
+
+if access_token_opt.is_some() && refresh_token_opt.is_some() {
+    let access_token = access_token_opt.unwrap().1;
+    let refresh_token = refresh_token_opt.unwrap().1;
+
+    let token = build_token(&access_token, &refresh_token);
+
+    let mut spotify = AuthCodeSpotify::from_token(token);
+
+    let current = spotify.current_playing(None, None::<&[_]>).await;
+
+    if current.is_ok() {
+        let current_unwrapped = &current.unwrap();
+        if current_unwrapped.is_some() {
+            return build_response(&current_unwrapped.clone().unwrap());
+        }
+    }
+}
+```
+
+This is just a snippet obviously, as the actual result from Spotify gets cached and is only
+re-fetched every 10 seconds. If this was a more mission-critical piece of information, I would
+add more features like calculating time until the song ends, to make sure we catch it at the start,
+a lower delay, etc.
+
+Now all that's left to do is enable TLS, Dockerize this, and throw it on a VPS and call it a day!
+Just that easy, right? *Wrong...*
+
+## The Issue
+
+I started looking around the documentation for Rocket, and eventually I came upon [this](https://rocket.rs/v0.5-rc/guide/configuration/#tls)
+page, to start enabling TLS for the webserver. I quickly found the warning that it only supports
+TLS 1.2 and 1.3, which "may not be suitable for production use." 
+
+I originally found [this gist](https://gist.github.com/belst/ff36c5f3883f7bf9b06c379d0a7bed9e) that
+ran into the same situation, and attempted to get around it. However, since my nginx server is only
+ever going to host a single page, these instructions seemed more involved than what I needed
+to accomplish for my situation.
+
+That's fine, I can easily get around that with a little bit of [Docker](https://www.docker.com/) and
+[nginx](https://nginx.org/en/).
+
+The first thing I did was hop on my VPS and install nginx:
+
+```
+sudo apt install nginx
+```
+
+Next up, is installing a [LetsEncrypt](https://letsencrypt.org/) certificate using [this Certbot page](https://certbot.eff.org/instructions?ws=nginx&os=ubuntufocal).
+That handled everything for me, and now when I navigated to [my api](https://api.bbutner.com), I was greeted with SSL,
+and the nginx default landing page.
+
+Now for Docker, I followed the instructions on [this page](https://docs.docker.com/engine/install/ubuntu/).
+
+Finally, all I had to do was build my:
+
+*Dockerfile*
+```
+FROM rust:latest
+
+WORKDIR /app
+
+COPY . .
+
+EXPOSE 8000
+ENV ROCKET_PORT=8000
+
+RUN if [ ! -f "Cargo.toml" ]; then cargo init . ; fi
+RUN cargo install --path .
+
+CMD ["/app/target/release/bbutnerv3-backend"]
+```
+
+and then:
+
+*docker-compose.yml*
+```yml
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+    image: beaubutner/bbutner:v3-backend
+    ports:
+      - "1337:8000" 
+```
+
+I kept port 1337 since that was the original inspiration for this workaround.
+
+I spun up the container and navigated to the HTTP endpoint, and verified that it was
+properly functioning on port 1337, which I then closed off via the firewall. All that
+was left to do is to enable the proxy pass in nginx.
+
+```
+sudo nvim /etc/nginx/sites-enabled/default
+```
+
+In there, I found this section:
+
+```
+location / {
+        # First attempt to serve request as file, then
+        # as directory, then fall back to displaying a 404.
+        try_files $uri $uri/ =404;
+}
+```
+
+And changed it to:
+
+```
+location / {
+        # First attempt to serve request as file, then
+        # as directory, then fall back to displaying a 404.
+        #try_files $uri $uri/ =404;
+        proxy_pass http://127.0.0.1:1337;
+}
+```
+
+I now navigated to [my Spotify endpoint](https://api.bbutner.com/spotify) and voila, 
+working perfectly!

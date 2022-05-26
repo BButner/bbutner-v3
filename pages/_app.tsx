@@ -1,6 +1,5 @@
 import '../styles/globals.sass'
 import type {AppProps} from 'next/app'
-import {Layout} from "../components/layout/layout";
 import React, {useEffect} from "react";
 import {initState, useStore} from "../lib/state/state";
 import {ThemeTitle, updateCurrentTheme} from "../lib/theme";
@@ -43,9 +42,7 @@ function MyApp({Component, pageProps}: AppProps) {
     }
   }, []);
 
-  return <Layout>
-    <Component {...pageProps} />
-  </Layout>
+  return <Component {...pageProps} />
 }
 
 export default MyApp

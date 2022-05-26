@@ -30,7 +30,14 @@ export const Clock: React.FC = () => {
   useEffect(() => {
     updateTime();
 
-    setInterval(updateTime, 1000);
+    if (handle === 0) {
+      // @ts-ignore
+      handle = setInterval(updateTime, 1000);
+    } else {
+      clearInterval(handle);
+      // @ts-ignore
+      handle = setInterval(updateTime, 1000);
+    }
   }, []);
 
   return (
