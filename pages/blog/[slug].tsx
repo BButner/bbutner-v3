@@ -19,13 +19,15 @@ const BlogPage: NextPage = ({ post: { source, frontmatter } }) => {
         <title>{frontmatter.title} | BButner</title>
       </Head>
       <div className="prose prose-amber prose-pre:shadow-xl dark:prose-invert w-3/4 lg:w-2/3 max-w-full m-auto py-8">
-        <Link href="/blog">
-          <a className="pb-8 block">
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
-            </svg>
-          </a>
-        </Link>
+        <div className="pb-8 w-fit">
+          <Link href="/blog">
+            <a className="pb-8 text-zinc-900 dark:text-zinc-100">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+            </a>
+          </Link>
+        </div>
         <h1 className="p-0 m-0">{frontmatter.title}</h1>
         <i className="text-gray-500">
           {dayjs(frontmatter.publishedAt).format('MMMM D, YYYY')} &mdash;{' '}
@@ -66,9 +68,11 @@ export async function getStaticProps({ params }) {
         [
           rehypeAutolinkHeadings,
           {
-            properties: { className: ['anchor'] },
-          },
-          { behaviour: 'wrap' },
+            behavior: 'wrap',
+            properties: {
+              className: 'blog-heading',
+            }
+          }
         ],
         rehypeHighlight,
         rehypeCodeTitles,
