@@ -24,8 +24,6 @@ export const AppleLogo: React.FC = () => {
       </BarButton.Button>
       <BarButton.Panel position="left" className={styles.panel}>
         <button onClick={openWindow}>About This Site</button>
-        <hr/>
-        <button>System Preferences</button>
       </BarButton.Panel>
     </BarButton>
   )
