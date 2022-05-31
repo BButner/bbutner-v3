@@ -26,5 +26,10 @@ export const desktopIcons: DesktopIcon[] = [
     title: 'Rider',
     iconUrl: `${DESKOP_IMAGE_URL}/Rider.png`,
     href: 'https://www.jetbrains.com/rider/'
+  },
+  {
+    title: 'Neovim',
+    iconUrl: `${DESKOP_IMAGE_URL}/neovim.png`,
+    href: 'https://neovim.io'
   }
 ]
