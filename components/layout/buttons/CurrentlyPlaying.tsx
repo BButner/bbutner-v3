@@ -19,7 +19,7 @@ export const CurrentlyPlaying: React.FC = () => {
       initPlayback();
       setInitialized(true);
     }
-  }, []);
+  }, [current]);
 
   const initPlayback = () => {
     refreshSpotify();
@@ -84,6 +84,14 @@ export const CurrentlyPlaying: React.FC = () => {
     }
 
     return '/images/spotify.png';
+  }
+
+  const shouldPlayBeVisible = (): boolean => {
+    return !current || !current.is_playing;
+  }
+
+  const shouldPauseBeVisible = (): boolean => {
+    return !!(current) && current.is_playing;
   }
 
   return (
@@ -167,7 +175,18 @@ export const CurrentlyPlaying: React.FC = () => {
                 <path d="M29,5v22c0,1.1-0.698,1.432-1.552,0.739L18,20.062V27c0,1.1-0.698,1.432-1.552,0.739L3.552,17.261
 	                     c-0.854-0.694-0.854-1.829,0-2.522L16.448,4.261C17.302,3.568,18,3.9,18,5v6.937l9.448-7.676C28.302,3.568,29,3.9,29,5z"/>
               </svg>
-              <svg
+              {/* Play Button */}
+              {shouldPlayBeVisible() && <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 32 32"
+                width={24}
+                height={24}
+                className={store.currentThemeMode === ThemeTitle.Dark ? 'fill-white' : 'fill-zinc-500'}>
+                <path
+                  d="M27.268,16.999L4.732,30.001C3.78,30.55,3,30.1,3,29V3c0-1.1,0.78-1.55,1.732-1.001l22.535,13.001
+                    C28.22,15.55,28.22,16.45,27.268,16.999z"/>
+              </svg>}
+              {/* Pause Button */}
+              {shouldPauseBeVisible() && <svg
                 version="1.1"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 32 32"
@@ -177,7 +196,7 @@ export const CurrentlyPlaying: React.FC = () => {
                 <path
                   d="M14,6v20c0,1.1-0.9,2-2,2H8c-1.1,0-2-0.9-2-2V6c0-1.1,0.9-2,2-2h4C13.1,4,14,4.9,14,6z M24,4h-4
 	                 c-1.1,0-2,0.9-2,2v20c0,1.1,0.9,2,2,2h4c1.1,0,2-0.9,2-2V6C26,4.9,25.1,4,24,4z"/>
-              </svg>
+              </svg>}
               <svg
                 version="1.1"
                 xmlns="http://www.w3.org/2000/svg"
