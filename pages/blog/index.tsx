@@ -1,25 +1,26 @@
 import {NextPage} from "next";
 import Link from "next/link";
-import { getAllArticles, Post } from "../../lib/blog/articles";
+import { getAllArticles, Article } from "../../lib/blog/articles";
 
 interface BlogIndexProps {
-  posts: Post[];
+  articles: Article[];
 }
 
-const Index: NextPage<BlogIndexProps> = ({ posts }) => {
+const Index: NextPage<BlogIndexProps> = ({ articles }) => {
+  console.log(articles);
   return (
     <div className="m-auto prose prose-amber dark:prose-invert w-3/4 lg:w-2/3 max-w-full py-8">
       <h1>BButner Blog</h1>
       <h2>Posts</h2>
       <ul>
-        {posts.map(post => {
+        {articles.map(post => {
           return <li key={post.slug}>
-            <span className="font-bold">[{post.publishedAt}]</span>&nbsp;
+            <span className="font-bold">[{post.headerData.publishedAt}]</span>&nbsp;
             <Link href={`/blog/${post.slug}`} className="text-orange-400">
-              {post.title}
+              {post.headerData.title}
             </Link>
             &nbsp;-&nbsp;
-            <span className="italic">{post.excerpt}</span>
+            <span className="italic">{post.headerData.excerpt}</span>
           </li>
         })}
       </ul>
@@ -42,7 +43,7 @@ export async function getStaticProps() {
 
   return {
     props: {
-      posts: articles.reverse(),
+      articles: articles.reverse(),
     },
   }
 }

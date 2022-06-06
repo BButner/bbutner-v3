@@ -2,7 +2,7 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings"
 import rehypeCodeTitles from "rehype-code-titles"
 import rehypeHighlight from "rehype-highlight"
 import rehypeSlug from "rehype-slug"
-import { getArticleFromSlug, getSlug } from "../../lib/blog/articles"
+import { Article, getArticleFromSlug, getSlugs } from "../../lib/blog/articles"
 import { serialize } from 'next-mdx-remote/serialize'
 import dayjs from "dayjs"
 import { NextPage } from "next"
@@ -11,12 +11,19 @@ import Head from "next/head"
 import 'highlight.js/styles/atom-one-dark-reasonable.css'
 import Link from "next/link";
 
-// @ts-ignore TODO
-const BlogPage: NextPage = ({ post: { source, frontmatter } }) => {
+interface BlogPageProps {
+  source: any,
+  article: Article,
+}
+
+const BlogPage: NextPage<BlogPageProps> = ({ source, article }) => {
+  console.log(source);
+  console.log(article);
+
   return (
     <div className="m-auto">
       <Head>
-        <title>{frontmatter.title} | BButner</title>
+        <title>{article.headerData.title} | BButner</title>
       </Head>
       <div className="prose prose-amber prose-pre:shadow-xl dark:prose-invert w-3/4 lg:w-2/3 max-w-full m-auto py-8">
         <div className="pb-8 w-fit">
@@ -28,10 +35,10 @@ const BlogPage: NextPage = ({ post: { source, frontmatter } }) => {
             </a>
           </Link>
         </div>
-        <h1 className="p-0 m-0">{frontmatter.title}</h1>
+        <h1 className="p-0 m-0">{article.headerData.title}</h1>
         <i className="text-gray-500">
-          {dayjs(frontmatter.publishedAt).format('MMMM D, YYYY')} &mdash;{' '}
-          {frontmatter.readingTime}
+          {dayjs(article.headerData.publishedAt).format('MMMM D, YYYY')} &mdash;{' '}
+          {article.headerData.readingTime}
         </i>
         <div className="content">
           <MDXRemote {...source} />
@@ -41,27 +48,23 @@ const BlogPage: NextPage = ({ post: { source, frontmatter } }) => {
   )
 }
 
-// dynamically generate the slugs for each article(s)
 export async function getStaticPaths() {
-  // getting all paths of each article as an array of
-  // objects with their unique slugs
-  const paths = (await getSlug()).map((slug) => ({ params: { slug } }))
+  const paths = (await getSlugs()).map((slug) => ({ params: { slug } }));
 
   return {
     paths,
-    // in situations where you try to access a path
-    // that does not exist. it'll return a 404 page
     fallback: false,
   }
 }
 
 // @ts-ignore TODO
 export async function getStaticProps({ params }) {
-  //fetch the particular file based on the slug
-  const { slug } = params
-  const { content, frontmatter } = await getArticleFromSlug(slug)
+  const { slug } = params;
+  const articleData = await getArticleFromSlug(slug)
 
-  const mdxSource = await serialize(content, {
+  if (!articleData) return null;
+
+  const mdxSource = await serialize(articleData.body, {
     mdxOptions: {
       rehypePlugins: [
         rehypeSlug,
@@ -82,10 +85,8 @@ export async function getStaticProps({ params }) {
 
   return {
     props: {
-      post: {
-        source: mdxSource,
-        frontmatter,
-      },
+      source: mdxSource,
+      article: articleData
     },
   }
 }

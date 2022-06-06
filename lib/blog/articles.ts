@@ -1,71 +1,66 @@
 import path from "path";
 import fs from "fs";
 import matter from "gray-matter";
-import readingTime from "reading-time";
+import readingTime, {ReadTimeResults} from "reading-time";
 import { sync } from "glob";
 
-export interface Post {
+const articlesPath = path.join(process.cwd(), 'data/articles')
+
+export const getSlugs = async (): Promise<string[]> => {
+  const paths = sync(`${articlesPath}/*.mdx`);
+
+  return paths.map(path => {
+    const content = path.split('/');
+    return content[content.length - 1].replace('.mdx', '');
+  });
+}
+
+export const getArticleFromSlug = async (slug: string): Promise<Article | null> => {
+  const articlePath: string = path.join(articlesPath, slug + '.mdx');
+
+  if (fs.existsSync(articlePath)) {
+    const rawData: string = fs.readFileSync(articlePath, 'utf-8');
+
+    return getArticleFromData(slug, rawData);
+  }
+
+  return null;
+}
+
+export interface Article {
+  slug: string;
+  headerData: ArticleHeaderData;
+  body: string;
+}
+
+interface ArticleHeaderData {
   title: string;
   publishedAt: string;
   excerpt: string;
   readingTime: string;
-  slug: string;
 }
 
-const articlesPath = path.join(process.cwd(), 'data/articles')
+export const getAllArticles = async (): Promise<Article[]> => {
+  const articles: string[] = fs.readdirSync(articlesPath);
+  console.log('articles', articles);
 
-export async function getSlug() {
-  const paths = sync(`${articlesPath}/*.mdx`);
+  return articles.map(article => {
+    const slug: string = article.replace('.mdx', '');
+    const rawData = fs.readFileSync(path.join(articlesPath, article), 'utf-8');
 
-  return paths.map((path) => {
-    // holds the paths to the directory of the article
-    const pathContent = path.split('/');
-    const fileName = pathContent[pathContent.length - 1];
-    const [slug, _extension] = fileName.split('.');
-
-    return slug;
-  });
+    return getArticleFromData(slug, rawData);
+  })
 }
 
-// @ts-ignore TODO
-export async function getArticleFromSlug(slug) {
-  const articleDir = path.join(articlesPath, `${slug}.mdx`);
-  const source = fs.readFileSync(articleDir);
-  const { content, data } = matter(source);
+const getArticleFromData = (slug: string, rawData: string): Article => {
+  const { content, data } = matter(rawData);
 
   return {
-    content,
-    frontmatter: {
-      slug,
-      excerpt: data.excerpt,
-      title: data.title,
-      publishedAt: data.publishedAt,
-      // @ts-ignore TODO
-      readingTime: readingTime(source).text,
-      ...data,
+    slug,
+    headerData: {
+      ...data as ArticleHeaderData,
+      readingTime: readingTime(rawData).text
     },
+    body: content
   }
-}
-
-export async function getAllArticles(): Promise<Post[]> {
-  const articles = fs.readdirSync(path.join(process.cwd(), 'data/articles'))
-
-  // @ts-ignore TODO
-  return articles.reduce((allArticles, articleSlug) => {
-    // get parsed data from mdx files in the "articles" dir
-    const source = fs.readFileSync(
-      path.join(process.cwd(), 'data/articles', articleSlug),
-      'utf-8'
-    )
-    const { data } = matter(source)
-
-    return [
-      {
-        ...data,
-        slug: articleSlug.replace('.mdx', ''),
-        readingTime: readingTime(source).text,
-      },
-      ...allArticles,
-    ]
-  }, [])
 }
