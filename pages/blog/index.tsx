@@ -13,7 +13,9 @@ const Index: NextPage<BlogIndexProps> = ({ articles }) => {
       <h1>BButner Blog</h1>
       <h2>Posts</h2>
       <ul>
-        {articles.map(post => {
+        {articles
+        .sort((a, b) => Date.parse(b.headerData.publishedAt) - Date.parse(a.headerData.publishedAt))
+          .map(post => {
           return <li key={post.slug}>
             <span className="font-bold">[{post.headerData.publishedAt}]</span>&nbsp;
             <Link href={`/blog/${post.slug}`} className="text-orange-400">

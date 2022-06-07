@@ -4,7 +4,6 @@ import rehypeHighlight from "rehype-highlight"
 import rehypeSlug from "rehype-slug"
 import { Article, getArticleFromSlug, getSlugs } from "../../lib/blog/articles"
 import { serialize } from 'next-mdx-remote/serialize'
-import dayjs from "dayjs"
 import { NextPage } from "next"
 import 'highlight.js/styles/atom-one-dark-reasonable.css'
 import { ArticleRender } from "../../components/blog/ArticleRender"
