@@ -29,8 +29,8 @@ export async function getStaticPaths() {
   }
 }
 
-
-export async function getStaticProps({ params }) {
+// @ts-ignore
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { slug } = params;
   const articleData = await getArticleFromSlug(slug)
 
