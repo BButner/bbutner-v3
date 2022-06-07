@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import {MDXRemote} from "next-mdx-remote";
 import dynamic from "next/dynamic";
 import {MDXComponents} from "mdx/types";
+import {NextSeo} from "next-seo";
 
 const componentRegEx: RegExp = new RegExp(/\<.* \/\>/);
 
@@ -28,6 +29,9 @@ export const ArticleRender: React.FC<BlogPageProps> = ({source, article}) => {
 
   return (
     <div className="m-auto">
+      <NextSeo
+        title={`BButner Blog - ${article.headerData.title}`}
+        description={article.headerData.excerpt}/>
       <Head>
         <title>{article.headerData.title} | BButner</title>
       </Head>
