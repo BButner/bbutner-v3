@@ -11,7 +11,6 @@ const componentRegEx: RegExp = new RegExp(/\<.* \/\>/);
 
 const getDynamicComponent = (name: string) => dynamic(() => import(`./post_specific/${name}`).catch(err => () => {
   console.log(err)
-  return <p>❌ Component not found.</p>
 }), {ssr: false});
 
 export const ArticleRender: React.FC<BlogPageProps> = ({source, article}) => {

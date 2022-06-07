@@ -42,7 +42,6 @@ interface ArticleHeaderData {
 
 export const getAllArticles = async (): Promise<Article[]> => {
   const articles: string[] = fs.readdirSync(articlesPath);
-  console.log('articles', articles);
 
   return articles.map(article => {
     const slug: string = article.replace('.mdx', '');

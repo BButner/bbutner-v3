@@ -23,8 +23,6 @@ export const Clock: React.FC = () => {
     setDateString(`${weekday[today.getDay()]} ${months[today.getMonth()]} ${today.getDate()}`);
 
     setTimeString(`${h < 10 ? '0' + h : h}:${m < 10 ? '0' + m : m} ${h < 12 ? 'AM' : 'PM'}`);
-
-    console.log('testing');
   };
 
   useEffect(() => {
