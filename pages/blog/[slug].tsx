@@ -14,6 +14,7 @@ export interface BlogPageProps {
 }
 
 const BlogPage: NextPage<BlogPageProps> = ({ source, article }) => {
+  console.log(article);
   return (
     <ArticleRender source={source} article={article}/>
   )

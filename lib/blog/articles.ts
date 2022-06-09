@@ -1,7 +1,7 @@
 import path from "path";
 import fs from "fs";
 import matter from "gray-matter";
-import readingTime, {ReadTimeResults} from "reading-time";
+import readingTime from "reading-time";
 import { sync } from "glob";
 
 const articlesPath = path.join(process.cwd(), 'data/articles')
@@ -38,6 +38,7 @@ interface ArticleHeaderData {
   publishedAt: string;
   excerpt: string;
   readingTime: string;
+  tags: string[];
 }
 
 export const getAllArticles = async (): Promise<Article[]> => {
@@ -58,6 +59,7 @@ const getArticleFromData = (slug: string, rawData: string): Article => {
     slug,
     headerData: {
       ...data as ArticleHeaderData,
+      tags: data.tags.split('|'),
       readingTime: readingTime(rawData).text
     },
     body: content
