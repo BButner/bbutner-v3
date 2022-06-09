@@ -51,7 +51,7 @@ export const ArticleRender: React.FC<BlogPageProps> = ({source, article}) => {
           {article.headerData.readingTime}
         </i>
         <div className="flex items-center space-x-2">
-        {article.tags.map(tag => <Tag tag={tag}/>)}
+        {article.headerData.tags.map(tag => <Tag tag={tag}/>)}
         </div>
         <div className="content">
           <MDXRemote {...source} components={components}/>
