@@ -1,0 +1,17 @@
+.table
+  position: relative
+  width: 100%
+
+  &:focus
+    @apply bg-blue-500
+
+  tr:first-of-type
+    border-top: 1px solid
+    border-bottom: 1px solid
+    @apply border-zinc-100
+
+  th:not(:first-of-type)
+    font-weight: normal
+
+  td,td
+    padding-left: 8px
