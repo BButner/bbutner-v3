@@ -7,6 +7,7 @@ import {MDXRemote} from "next-mdx-remote";
 import dynamic from "next/dynamic";
 import {MDXComponents} from "mdx/types";
 import {NextSeo} from "next-seo";
+import {Tag} from "components/blog/Tag";
 
 const componentRegEx: RegExp = new RegExp(/\<.* \/\>/);
 const getDynamicComponent = (name: string) => dynamic(() => import(`./post_specific/${name}.tsx`).catch(err => () => {
@@ -45,13 +46,15 @@ export const ArticleRender: React.FC<BlogPageProps> = ({source, article}) => {
             </a>
           </Link>
         </div>
-        <h1 className="p-0 m-0">{article.headerData.title}</h1>
-        <i className="text-gray-500">
-          {dayjs(article.headerData.publishedAt).format('MMMM D, YYYY')} &mdash;{' '}
-          {article.headerData.readingTime}
-        </i>
-        <div className="flex items-center space-x-2">
-        {article.headerData.tags.map(tag => <Tag tag={tag}/>)}
+        <div className="space-y-2">
+          <h1 className="p-0 m-0">{article.headerData.title}</h1>
+          <i className="text-gray-500">
+            {dayjs(article.headerData.publishedAt).format('MMMM D, YYYY')} &mdash;{' '}
+            {article.headerData.readingTime}
+          </i>
+          <div className="flex items-center space-x-2">
+            {article.headerData.tags.map(tag => <Tag key={tag} tag={tag}/>)}
+          </div>
         </div>
         <div className="content">
           <MDXRemote {...source} components={components}/>
