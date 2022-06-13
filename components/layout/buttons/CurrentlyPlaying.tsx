@@ -15,10 +15,9 @@ export const CurrentlyPlaying: React.FC = () => {
   const IMAGE_LENGTH = 48;
 
   useEffect(() => {
-    if (!initialized
-      && process.env.NEXT_PUBLIC_SPOTIFY_ENABLED
-      && !!!process.env.NEXT_PUBLIC_SPOTIFY_ENABLED) {
-      initPlayback();
+    if (!initialized) {
+      if (!process.env.NEXT_PUBLIC_SPOTIFY_ENABLED)
+        initPlayback();
       setInitialized(true);
     }
   }, [current]);
@@ -135,7 +134,8 @@ export const CurrentlyPlaying: React.FC = () => {
               </div>
               <div className="overflow-hidden">
                 <p className="font-semibold">{current?.name ?? 'Not Currently Listening'}</p>
-                {current && <p className="opacity-75 text-ellipsis max-w-full">{current.artists.join(" ")} - {current.album}</p>}
+                {current &&
+                  <p className="opacity-75 text-ellipsis max-w-full">{current.artists.join(" ")} - {current.album}</p>}
               </div>
             </div>
 
@@ -179,10 +179,10 @@ export const CurrentlyPlaying: React.FC = () => {
               </svg>
               {/* Play Button */}
               {shouldPlayBeVisible() && <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 32 32"
-                width={24}
-                height={24}
-                className={store.currentThemeMode === ThemeTitle.Dark ? 'fill-white' : 'fill-zinc-500'}>
+                                             viewBox="0 0 32 32"
+                                             width={24}
+                                             height={24}
+                                             className={store.currentThemeMode === ThemeTitle.Dark ? 'fill-white' : 'fill-zinc-500'}>
                 <path
                   d="M27.268,16.999L4.732,30.001C3.78,30.55,3,30.1,3,29V3c0-1.1,0.78-1.55,1.732-1.001l22.535,13.001
                     C28.22,15.55,28.22,16.45,27.268,16.999z"/>
