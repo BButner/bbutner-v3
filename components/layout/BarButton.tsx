@@ -1,11 +1,10 @@
 import {AdditionalClassNames, ChildrenProps, OnClickButton} from "../../lib/props";
 import clsx from "clsx";
-import {Menu, Popover} from "@headlessui/react";
+import {Popover} from "@headlessui/react";
 import styles from "./BarButton.module.sass";
 import {useStore} from "../../lib/state/state";
 import {WallpaperEnum} from "../../lib/wallpapers";
 import {ThemeTitle} from "../../lib/theme";
-import { useEffect } from "react";
 
 interface PanelProps {
   position: 'left' | 'right';

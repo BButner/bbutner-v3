@@ -15,7 +15,9 @@ export const CurrentlyPlaying: React.FC = () => {
   const IMAGE_LENGTH = 48;
 
   useEffect(() => {
-    if (!initialized) {
+    if (!initialized
+      && process.env.NEXT_PUBLIC_SPOTIFY_ENABLED
+      && !!!process.env.NEXT_PUBLIC_SPOTIFY_ENABLED) {
       initPlayback();
       setInitialized(true);
     }
