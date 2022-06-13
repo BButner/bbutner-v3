@@ -5,7 +5,6 @@ import Image from "next/image";
 import {useEffect, useRef, useState} from "react";
 import clsx from "clsx";
 import {finderProjects} from "../../../lib/finder/finder";
-import styles from "./Finder.module.sass";
 
 interface Favorite {
   title: string;
@@ -48,14 +47,20 @@ export const Finder: React.FC<WindowProps> = ({windowId}) => {
       <Window.Content className="min-w-[900px]">
         <div className="flex">
           <div
-            className="w-[200px] h-full py-2 px-4 bg-zinc-200/70 dark:bg-dark-title/70 backdropBlur pt-12 rounded-l-lg space-y-3 pb-52">
+            className="w-[200px] h-full py-2 px-4 bg-zinc-200/70 dark:bg-dark-title/70 backdropBlur pt-12 rounded-l-lg space-y-2 pb-52">
             <p className="text-[10px] opacity-50">Favorites</p>
             {favorites.map(fav => {
-              return <div key={fav.iconSrc} className="flex items-center text-xs space-x-2">
-                <Image src={`/images/finder_icons/${fav.iconSrc}`} width={14} height={14}/>
+              return <div
+                key={fav.iconSrc}
+                className={clsx(
+                  'flex items-center text-xs space-x-2 px-2 py-1 rounded-md',
+                  fav.title === 'bbutner' ? 'bg-zinc-300/60 dark:bg-zinc-700' : ''
+                )}>
+                < Image src={`/images/finder_icons/${fav.iconSrc}`} width={14} height={14}/>
                 <p className="m-0 p-0">{fav.title}</p>
               </div>
-            })}
+            })
+            }
           </div>
           <div
             className="w-full flex flex-wrap flex-col bg-white dark:bg-dark-content rounded-r-lg border-l border-white dark:border-black">
@@ -66,9 +71,10 @@ export const Finder: React.FC<WindowProps> = ({windowId}) => {
               ref={documentContainerRef}
               className="w-full flex-1 relative">
               <div className="w-full h-6">
-                <div className="h-6 flex pl-6 text-xs items-center border-t border-b border-zinc-200">
+                <div
+                  className="h-6 flex pl-6 text-xs items-center border-t border-b border-zinc-200 dark:border-dark-title">
                   <p className="w-32 pl-4 font-semibold">Name</p>
-                  <p>Type</p>
+                  <p className="text-zinc-500 dark:text-zinc-400">Type</p>
                 </div>
               </div>
               <div
@@ -82,30 +88,12 @@ export const Finder: React.FC<WindowProps> = ({windowId}) => {
                       key={index}
                       className={clsx(
                         'h-6 w-full',
-                        index % 2 === 0 ? 'bg-white' : 'bg-zinc-100'
+                        index % 2 === 0 ? 'bg-white dark:bg-dark-content' : 'bg-zinc-100 dark:bg-dark-title'
                       )}/>
                   )
                 })}
               </div>
-              {/*<table className={styles.table}>*/}
-              {/*  <tr className="h-6 text-xs font-normal">*/}
-              {/*    <th>Name</th>*/}
-              {/*    <th>Type</th>*/}
-              {/*  </tr>*/}
-              {/*  {finderProjects.map(project => {*/}
-              {/*    return (*/}
-              {/*      <tr*/}
-              {/*        className="h-6 text-xs"*/}
-              {/*        key={project.title}>*/}
-              {/*        <td className="w-32">{project.title}</td>*/}
-              {/*        <td className="w-16 text-zinc-500">{project.type}</td>*/}
-              {/*        <td></td>*/}
-              {/*      </tr>*/}
-              {/*    )*/}
-              {/*  })}*/}
-              {/*</table>*/}
               <div className="relative">
-
                 {finderProjects.map(project =>
                   <button
                     onDoubleClick={() => open(project.href)}
@@ -113,7 +101,7 @@ export const Finder: React.FC<WindowProps> = ({windowId}) => {
                     key={project.title}>
                     <div className="flex items-center pl-6">
                       <p className="w-32">{project.title}</p>
-                      <p>{project.type}</p>
+                      <p className="text-zinc-500 dark:text-zinc-400">{project.type}</p>
                     </div>
                   </button>
                 )}
