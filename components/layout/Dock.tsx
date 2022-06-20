@@ -29,6 +29,7 @@ export const Dock: React.FC = () => {
                 onClick={openAbout}/>
       <DockIconUrl windowId={WindowId.GitHub} href="https://github.com/bbutner"/>
       <DockIconUrl windowId={WindowId.LinkedIn} href="https://www.linkedin.com/in/beau-butner-1491b7172/"/>
+      <DockIconUrl windowId={WindowId.Blog} href="/blog"/>
       <div className={styles.divider}/>
       <DockIcon windowId="Trash" key={"Trash"} transparent/>
     </div>

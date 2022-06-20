@@ -39,6 +39,7 @@ interface ArticleHeaderData {
   excerpt: string;
   readingTime: string;
   tags: string[];
+  published: boolean;
 }
 
 export const getAllArticles = async (): Promise<Article[]> => {
@@ -49,7 +50,7 @@ export const getAllArticles = async (): Promise<Article[]> => {
     const rawData = fs.readFileSync(path.join(articlesPath, article), 'utf-8');
 
     return getArticleFromData(slug, rawData);
-  })
+  }).filter(article => article.headerData.published);
 }
 
 const getArticleFromData = (slug: string, rawData: string): Article => {
