@@ -1,7 +1,6 @@
 import {BlogPageProps} from "../../pages/blog/[slug]";
 import Head from "next/head";
 import Link from "next/link";
-import path from "path";
 import dayjs from "dayjs";
 import {MDXRemote} from "next-mdx-remote";
 import dynamic from "next/dynamic";
@@ -38,11 +37,8 @@ export const ArticleRender: React.FC<BlogPageProps> = ({source, article}) => {
       <div className="prose prose-amber prose-pre:shadow-xl dark:prose-invert w-3/4 lg:w-2/3 max-w-full m-auto py-8">
         <div className="pb-8 w-fit">
           <Link href="/blog">
-            <a className="pb-8 text-zinc-900 dark:text-zinc-100">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24"
-                   stroke="currentColor" strokeWidth="2">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-              </svg>
+            <a className="pb-8 dark:text-zinc-100">
+              &lt; Back
             </a>
           </Link>
         </div>

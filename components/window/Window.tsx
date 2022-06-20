@@ -1,8 +1,9 @@
 import {DragControls, motion} from "framer-motion";
 import {AdditionalClassNames, ChildrenProps} from "../../lib/props";
-import {useStore} from "../../lib/state/state";
 import clsx from "clsx";
 import {useEffect, useRef, useState} from "react";
+import {stateDesktop, stateWindow} from "../../lib/state/state";
+import { useAtom } from "jotai";
 
 export interface WindowProps {
   windowId: string;
@@ -43,7 +44,8 @@ const WindowComponent: React.FC<ChildrenProps & AdditionalClassNames & DragContr
      dragControls,
      windowId
    }) => {
-    const store = useStore();
+    const [desktopState] = useAtom(stateDesktop);
+    const [windowState, setWindowState] = useAtom(stateWindow);
     const windowRef = useRef(null);
     const [top, setTop] = useState(0);
     const [left, setLeft] = useState(0);
@@ -51,8 +53,8 @@ const WindowComponent: React.FC<ChildrenProps & AdditionalClassNames & DragContr
     const [initialTop, setInitialTop] = useState(0);
 
     useEffect(() => {
-      if (store.desktop && windowRef.current && top === 0 && left === 0) {
-        const desktop = (store.desktop.current as Element);
+      if (desktopState.desktop && windowRef.current && top === 0 && left === 0) {
+        const desktop = (desktopState.desktop.current as Element);
         const window = (windowRef.current as Element);
         const centerTop = (desktop.clientHeight / 2) - (window.clientHeight / 2);
         const centerLeft = (desktop.clientWidth / 2) - (window.clientWidth / 2);
@@ -75,20 +77,23 @@ const WindowComponent: React.FC<ChildrenProps & AdditionalClassNames & DragContr
           setLeft(centerLeft);
         }
       }
-    }, [store.desktop]);
+    }, [desktopState.desktop]);
 
-    if (!store.desktop) return <></>
+    if (!desktopState.desktop) return <></>
 
     return (
       <motion.div
         onPointerDown={() => {
-          useStore.setState({activeWindowId: windowId});
+          setWindowState({
+            ...windowState,
+            activeWindowId: windowId
+          });
         }}
         ref={windowRef}
         drag
         dragElastic={0}
         dragMomentum={false}
-        dragConstraints={store.desktop}
+        dragConstraints={desktopState.desktop}
         dragListener={false}
         dragControls={dragControls}
         onDragStart={() => {
@@ -96,9 +101,9 @@ const WindowComponent: React.FC<ChildrenProps & AdditionalClassNames & DragContr
         }}
         onDragEnd={() => {
           document.documentElement.classList.remove('noSelect');
-          if (windowRef.current && store.desktop) {
+          if (windowRef.current && desktopState.desktop) {
             const w = (windowRef.current as Element);
-            const desktop = (store.desktop.current as Element);
+            const desktop = (desktopState.desktop.current as Element);
             const savedLeft = localStorage.getItem(`${windowId}Left`);
             const savedTop = localStorage.getItem(`${windowId}Top`);
             const matrix = new WebKitCSSMatrix(window.getComputedStyle(w).transform);
@@ -120,8 +125,8 @@ const WindowComponent: React.FC<ChildrenProps & AdditionalClassNames & DragContr
           'text-zinc-900 dark:text-white transition-colors transition-opacity duration-200',
           'absolute shadow',
           top == 0 && left == 0 ? 'opacity-0' : 'opacity-1',
-          store.activeWindowId === windowId ? 'z-40' : '',
-          store.minimizedWindowIds.includes(windowId) ? 'hidden' : '',
+          windowState.activeWindowId === windowId ? 'z-40' : '',
+          windowState.minimizedWindowIds.includes(windowId) ? 'hidden' : '',
           className
         )}>
         <div className="relative">

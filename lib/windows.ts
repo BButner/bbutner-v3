@@ -3,4 +3,5 @@ export class WindowId {
   static Finder: string = 'Finder';
   static GitHub: string = 'GitHub';
   static LinkedIn: string = 'LinkedIn';
+  static Blog: string = 'Blog';
 }
