@@ -1,19 +1,20 @@
 import React from "react";
 import styles from "./WindowButtons.module.sass";
 import {WindowProps} from "./Window";
-import {useStore} from "../../lib/state/state";
 import {AdditionalClassNames} from "../../lib/props";
 import clsx from "clsx";
+import { useAtom } from "jotai";
+import {StateManagerWindow, stateWindow} from "lib/state/state";
 
 export const WindowButtons: React.FC<WindowProps & AdditionalClassNames> = ({windowId, className}) => {
-  const store = useStore();
+  const windowState = useAtom(stateWindow);
 
   const closeWindow = () => {
-    store.closeWindow(windowId);
+    StateManagerWindow.closeWindow(windowState, windowId);
   }
 
   const minimizeWindow = () => {
-    store.minimizeWindow(windowId);
+    StateManagerWindow.minimizeWindow(windowState, windowId);
   }
 
   return (

@@ -1,4 +1,3 @@
-import {useStore} from "../../lib/state/state";
 import Image from "next/image";
 import {OnClickButton} from "../../lib/props";
 import styles from "./Dock.module.sass";
@@ -6,16 +5,18 @@ import clsx from "clsx";
 import React from "react";
 import {WindowProps} from "../window/Window";
 import {WindowId} from "../../lib/windows";
+import {StateManagerWindow, stateWindow} from "lib/state/state";
+import {useAtom} from "jotai";
 
 export const Dock: React.FC = () => {
-  const store = useStore();
+  const windowState = useAtom(stateWindow);
 
   const openFinder = () => {
-    store.openWindow(WindowId.Finder);
+    StateManagerWindow.openWindow(windowState, WindowId.Finder);
   }
 
   const openAbout = () => {
-    store.openWindow(WindowId.AboutThisSite);
+    StateManagerWindow.openWindow(windowState, WindowId.AboutThisSite);
   }
 
   return (
@@ -39,7 +40,7 @@ interface DockIconProps {
 }
 
 const DockIcon: React.FC<DockIconProps & OnClickButton & WindowProps> = ({onClick, transparent, windowId}) => {
-  const store = useStore();
+  const [windowState] = useAtom(stateWindow);
 
   return <div className={styles.dockIcon}>
     <button onClick={onClick} className={clsx(styles.dockButton, !transparent ? 'bg-zinc-700' : '')}>
@@ -47,7 +48,7 @@ const DockIcon: React.FC<DockIconProps & OnClickButton & WindowProps> = ({onClic
     </button>
     <div
       className={clsx(
-        store.openWindowIds.includes(windowId) ? 'opacity-1' : 'opacity-0',
+        windowState.openWindowIds.includes(windowId) ? 'opacity-1' : 'opacity-0',
         'bg-dark-content dark:bg-zinc-400/80 w-1 h-1 rounded-full m-auto mt-0.5 transition-all duration-200'
       )}/>
     <DockIconTooltip title={windowId}/>
@@ -63,7 +64,7 @@ interface DockIconUrlProps {
 const DockIconUrl: React.FC<DockIconUrlProps> = ({href, transparent, windowId}) => {
   return <div className={styles.dockIcon}>
     <a target="_" href={href} className={clsx(styles.dockButton, !transparent ? 'bg-zinc-700' : '')}>
-      <Image src={`/images/dock_icons/${windowId}.png`} width={32} height={32}/>
+      <Image alt={`Dock icon for ${windowId}`} src={`/images/dock_icons/${windowId}.png`} width={32} height={32}/>
     </a>
     <div
       className={clsx(

@@ -1,6 +1,5 @@
 import {useEffect, useRef} from "react";
 import {motion} from "framer-motion";
-import {useStore} from "../../lib/state/state";
 import {desktopIcons} from "../../lib/desktop";
 import {AboutThisSite} from "../window/windows/AboutThisSite";
 import {Finder} from "../window/windows/Finder";
@@ -8,17 +7,25 @@ import {WindowId} from "../../lib/windows";
 import {Dock} from "./Dock";
 import styles from "./Desktop.module.sass"
 import clsx from "clsx";
+import {stateDesktop, stateWindow} from "../../lib/state/state";
+import { useAtom } from "jotai";
 
 export const Desktop: React.FC = () => {
   const desktopRef = useRef(null);
-  const state = useStore();
+  const [desktop, setDesktop] = useAtom(stateDesktop);
+  const [windowState] = useAtom(stateWindow);
 
   const shouldBeOpen = (windowId: string): boolean =>
-    state.openWindowIds.includes(windowId);
+    windowState.openWindowIds.includes(windowId);
 
   useEffect(() => {
-    if (desktopRef && !state.desktop) useStore.setState({desktop: desktopRef});
-  }, [state.activeWindowId, state.openWindowIds])
+    if (desktopRef && !desktop.desktop) {
+      setDesktop({
+        ...desktop,
+        desktop: desktopRef
+      })
+    }
+  }, [windowState.activeWindowId, windowState.openWindowIds])
 
   const openUrl = (href: string) => {
     window.open(href, '_blank');

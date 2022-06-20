@@ -1,4 +1,5 @@
-import {useStore} from "./state/state";
+import {StateDesktop} from "./state/state";
+import {SetStateAction} from "jotai";
 
 export class ThemeTitle {
   static Dark: string = 'dark';
@@ -6,24 +7,39 @@ export class ThemeTitle {
   static Auto: string = 'auto';
 }
 
-export const updateCurrentTheme = (): void => {
-  const theme: string = useStore.getState().theme;
+export const updateCurrentTheme = (state: [StateDesktop, ((update: SetStateAction<StateDesktop>) => void)]): void => {
+  const [desktop, setDesktop] = state;
+  const theme: string = desktop.theme;
+
+  console.log('updateCurrentTheme', state, theme);
 
   if (theme === ThemeTitle.Auto) {
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
       document.documentElement.classList.add('dark');
-      useStore.setState({currentThemeMode: ThemeTitle.Dark});
+      setDesktop({
+        ...desktop,
+        currentThemeMode: ThemeTitle.Dark
+      });
     } else {
       document.documentElement.classList.remove('dark');
-      useStore.setState({currentThemeMode: ThemeTitle.Light});
+      setDesktop({
+        ...desktop,
+        currentThemeMode: ThemeTitle.Light
+      });
     }
   } else {
     if (theme === ThemeTitle.Light) {
       document.documentElement.classList.remove('dark');
-      useStore.setState({currentThemeMode: ThemeTitle.Light});
+      setDesktop({
+        ...desktop,
+        currentThemeMode: ThemeTitle.Light
+      });
     } else {
       document.documentElement.classList.add('dark');
-      useStore.setState({currentThemeMode: ThemeTitle.Dark});
+      setDesktop({
+        ...desktop,
+        currentThemeMode: ThemeTitle.Dark
+      });
     }
   }
 }

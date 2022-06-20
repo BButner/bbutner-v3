@@ -2,9 +2,10 @@ import {AdditionalClassNames, ChildrenProps, OnClickButton} from "../../lib/prop
 import clsx from "clsx";
 import {Popover} from "@headlessui/react";
 import styles from "./BarButton.module.sass";
-import {useStore} from "../../lib/state/state";
+import {stateDesktop} from "../../lib/state/state";
 import {WallpaperEnum} from "../../lib/wallpapers";
 import {ThemeTitle} from "../../lib/theme";
+import {useAtom} from "jotai";
 
 interface PanelProps {
   position: 'left' | 'right';
@@ -28,10 +29,10 @@ export const Button: React.FC<ChildrenProps & AdditionalClassNames & OnClickButt
   }
 
 export const Panel: React.FC<ChildrenProps & AdditionalClassNames & PanelProps> = ({children, className, position}) => {
-  const store = useStore();
+  const [desktop] = useAtom(stateDesktop);
 
   const getWallpaper = (themeMode: string): string => {
-    if (store.wallpaper.wallpaper === WallpaperEnum.MONTEREY) {
+    if (desktop.wallpaper.wallpaper === WallpaperEnum.MONTEREY) {
       return themeMode === ThemeTitle.Dark ? styles.panelMontereyDark : styles.panelMonterey;
     }
 
@@ -46,8 +47,8 @@ export const Panel: React.FC<ChildrenProps & AdditionalClassNames & PanelProps> 
       position === 'left' ? 'left-0' : 'right-0',
       className,
       styles.panel,
-      store.currentThemeMode === ThemeTitle.Dark ? styles.panelDark : styles.panelLight, // this is dumb
-      getWallpaper(store.currentThemeMode)
+      desktop.currentThemeMode === ThemeTitle.Dark ? styles.panelDark : styles.panelLight, // this is dumb
+      getWallpaper(desktop.currentThemeMode)
     )}>
       {children}
     </Popover.Panel>
