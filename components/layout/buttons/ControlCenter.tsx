@@ -20,7 +20,7 @@ export const ControlCenter: React.FC = () => {
         </svg>
       </BarButton.Button>
       <BarButton.Panel position="right" className="overflow-hidden rounded-xl">
-        <div className="p-2 bg-zinc-100/40 dark:bg-dark-content/50 dark:border dark:border-dark-title shadow-lg rounded-xl">
+        <div className="p-2 bg-zinc-100/40 dark:bg-dark-content/50 border dark:border-dark-title shadow-lg rounded-xl">
           <p className="pb-1 font-semibold text-xs">Dark Mode</p>
           <Theme/>
         </div>

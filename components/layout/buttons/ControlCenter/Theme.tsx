@@ -3,7 +3,7 @@ import {stateDesktop} from "../../../../lib/state/state";
 import {ThemeTitle, updateCurrentTheme} from "../../../../lib/theme";
 import clsx from "clsx";
 import {useAtom} from "jotai";
-import { useEffect } from "react";
+import {useEffect} from "react";
 
 interface ThemeState {
   title: string;
